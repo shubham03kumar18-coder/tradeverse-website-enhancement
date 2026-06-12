@@ -1,49 +1,60 @@
-import { BookOpen, BarChart2, Brain, Shield, Search, Users, ArrowRight } from "lucide-react"
+import Link from "next/link"
+import { BookOpen, BarChart2, Brain, Shield, Library, Search, Users, ArrowRight, MessageCircle } from "lucide-react"
 
 const PHONE = "919318336747"
-const makeWA = (center: string) =>
-  `https://wa.me/${PHONE}?text=Hi%20TRADEVERSE%20CITY%2C%20I%20want%20to%20start%20learning%20the%20stock%20market%20and%20would%20like%20more%20information%20about%20your%20training%20program.%0A%0AI%27m%20particularly%20interested%20in%20the%20${encodeURIComponent(center)}.`
+const WA_ALL = `https://wa.me/${PHONE}?text=Hi%20TRADEVERSE%20CITY%2C%20I%20want%20to%20start%20learning%20the%20stock%20market%20and%20would%20like%20more%20information%20about%20your%20training%20program.`
 
 const centers = [
   {
     icon: <BookOpen className="w-6 h-6" />,
     title: "Beginner Hub",
+    slug: "beginner-hub",
     desc: "Start your trading journey with structured fundamentals and guided learning paths.",
     tag: "Foundation",
   },
   {
     icon: <BarChart2 className="w-6 h-6" />,
     title: "Technical Analysis Center",
+    slug: "technical-analysis-center",
     desc: "Master chart reading, indicators, and price pattern recognition.",
     tag: "Core Skill",
   },
   {
     icon: <Brain className="w-6 h-6" />,
     title: "Trading Psychology Center",
+    slug: "trading-psychology-center",
     desc: "Develop the mental discipline and emotional control every successful trader needs.",
     tag: "Mindset",
   },
   {
     icon: <Shield className="w-6 h-6" />,
     title: "Risk Management Center",
+    slug: "risk-management-center",
     desc: "Learn to protect capital and manage risk with precision at every trade.",
     tag: "Protection",
   },
   {
+    icon: <Library className="w-6 h-6" />,
+    title: "Learning Resources Library",
+    slug: "learning-resources-library",
+    desc: "Every book, tool, and guide a trader needs — curated in one place.",
+    tag: "Resources",
+  },
+  {
     icon: <Search className="w-6 h-6" />,
     title: "Market Research Center",
+    slug: "market-research-center",
     desc: "Conduct thorough market analysis and build data-driven trading decisions.",
     tag: "Research",
   },
   {
     icon: <Users className="w-6 h-6" />,
     title: "Community Learning Hub",
+    slug: "community-learning-hub",
     desc: "Learn alongside fellow traders, share insights, and grow together.",
     tag: "Community",
   },
 ]
-
-const WA_ALL = `https://wa.me/${PHONE}?text=Hi%20TRADEVERSE%20CITY%2C%20I%20want%20to%20start%20learning%20the%20stock%20market%20and%20would%20like%20more%20information%20about%20your%20training%20program.`
 
 export default function LearningCenters() {
   return (
@@ -52,7 +63,7 @@ export default function LearningCenters() {
       className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden scroll-mt-40"
       aria-label="Comprehensive Learning Platform"
     >
-      {/* Subtle top separator glow */}
+      {/* top separator glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-px"
         style={{ background: "linear-gradient(90deg, transparent, oklch(0.78 0.14 85 / 40%), transparent)" }}
@@ -77,13 +88,9 @@ export default function LearningCenters() {
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {centers.map((center, i) => (
-            <a
+            <div
               key={center.title}
-              href={makeWA(center.title)}
-              target="_blank"
-              rel="noopener noreferrer"
               className="group relative flex flex-col gap-4 p-6 rounded-2xl border border-border bg-card/60 backdrop-blur-sm card-glow transition-all duration-300 hover:-translate-y-1"
-              aria-label={`${center.title}: ${center.desc} — opens WhatsApp`}
               style={{ animationDelay: `${i * 80}ms` }}
             >
               {/* Tag */}
@@ -104,12 +111,28 @@ export default function LearningCenters() {
                 <p className="text-sm text-muted-foreground leading-relaxed text-pretty">{center.desc}</p>
               </div>
 
-              {/* Explore link */}
-              <div className="flex items-center gap-1.5 text-gold text-sm font-semibold mt-auto pt-2 group-hover:gap-3 transition-all duration-200">
-                <span>Explore</span>
-                <ArrowRight className="w-4 h-4" />
+              {/* Actions */}
+              <div className="flex items-center gap-3 mt-auto pt-3 border-t border-border">
+                <Link
+                  href={`/learning/${center.slug}`}
+                  className="flex-1 flex items-center justify-center gap-1.5 text-xs font-bold text-gold hover:opacity-80 transition-opacity duration-150 py-1.5"
+                  aria-label={`Explore ${center.title}`}
+                >
+                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                  Explore Center
+                </Link>
+                <a
+                  href={`https://wa.me/${PHONE}?text=Hi%20TRADEVERSE%20CITY%2C%20I%20am%20interested%20in%20the%20${encodeURIComponent(center.title)}.%20Please%20share%20more%20details.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-gold transition-colors duration-150 py-1.5"
+                  aria-label={`WhatsApp enquiry about ${center.title}`}
+                >
+                  <MessageCircle className="w-3.5 h-3.5" aria-hidden="true" />
+                  Enquire
+                </a>
               </div>
-            </a>
+            </div>
           ))}
         </div>
 

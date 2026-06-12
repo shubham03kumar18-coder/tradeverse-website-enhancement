@@ -1,3 +1,4 @@
+import Link from "next/link"
 import Image from "next/image"
 import { MessageCircle, Send, AtSign, Phone, MapPin } from "lucide-react"
 
@@ -10,34 +11,33 @@ const IG_LINK = "https://instagram.com/TRADEVERSE_CITY"
 const TEL_LINK = `tel:+${PHONE}`
 
 const learningLinks = [
-  "Beginner Hub",
-  "Technical Analysis Center",
-  "Trading Psychology Center",
-  "Risk Management Center",
-  "Learning Resources Library",
-  "Market Research Center",
-  "Community Learning Hub",
+  { label: "Beginner Hub", href: "/learning/beginner-hub" },
+  { label: "Technical Analysis Center", href: "/learning/technical-analysis-center" },
+  { label: "Trading Psychology Center", href: "/learning/trading-psychology-center" },
+  { label: "Risk Management Center", href: "/learning/risk-management-center" },
+  { label: "Learning Resources Library", href: "/learning/learning-resources-library" },
+  { label: "Market Research Center", href: "/learning/market-research-center" },
+  { label: "Community Learning Hub", href: "/learning/community-learning-hub" },
 ]
 
 const courseLinks = [
-  "Stock Market Fundamentals",
-  "Support & Resistance",
-  "Trading Psychology",
-  "Price Action Trading",
-  "Swing Trading",
-  "Intraday Trading",
-  "Risk Management",
-  "Options Trading Fundamentals",
-  "Portfolio Management",
+  { label: "Stock Market Fundamentals", href: "/courses/stock-market-fundamentals" },
+  { label: "Candlestick Analysis", href: "/courses/candlestick-analysis" },
+  { label: "Support & Resistance", href: "/courses/support-and-resistance" },
+  { label: "Trend Analysis", href: "/courses/trend-analysis" },
+  { label: "Technical Analysis", href: "/courses/technical-analysis" },
+  { label: "Price Action Trading", href: "/courses/price-action-trading" },
+  { label: "Swing Trading", href: "/courses/swing-trading" },
+  { label: "Intraday Trading", href: "/courses/intraday-trading" },
+  { label: "Risk Management", href: "/courses/risk-management" },
 ]
 
 const moreLinks = [
-  "Candlestick Analysis",
-  "Trend Analysis",
-  "Price Action Trading",
-  "Intraday Trading",
-  "Futures Market Basics",
-  "Market Research Techniques",
+  { label: "Trading Psychology", href: "/courses/trading-psychology" },
+  { label: "Options Trading Fundamentals", href: "/courses/options-trading-fundamentals" },
+  { label: "Futures Market Basics", href: "/courses/futures-market-basics" },
+  { label: "Portfolio Management", href: "/courses/portfolio-management" },
+  { label: "Market Research Techniques", href: "/courses/market-research-techniques" },
 ]
 
 export default function Footer() {
@@ -268,10 +268,10 @@ export default function Footer() {
               <h3 className="text-xs font-bold tracking-wider uppercase text-foreground mb-4">Learning Platform</h3>
               <ul className="space-y-2.5" role="list">
                 {learningLinks.map((l) => (
-                  <li key={l}>
-                    <a href="#learning-centers" className="text-xs text-muted-foreground hover:text-gold transition-colors duration-150">
-                      {l}
-                    </a>
+                  <li key={l.href}>
+                    <Link href={l.href} className="text-xs text-muted-foreground hover:text-gold transition-colors duration-150">
+                      {l.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -282,10 +282,10 @@ export default function Footer() {
               <h3 className="text-xs font-bold tracking-wider uppercase text-foreground mb-4">Trading Courses</h3>
               <ul className="space-y-2.5" role="list">
                 {courseLinks.map((l) => (
-                  <li key={l}>
-                    <a href="#courses" className="text-xs text-muted-foreground hover:text-gold transition-colors duration-150">
-                      {l}
-                    </a>
+                  <li key={l.href}>
+                    <Link href={l.href} className="text-xs text-muted-foreground hover:text-gold transition-colors duration-150">
+                      {l.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -296,10 +296,10 @@ export default function Footer() {
               <h3 className="text-xs font-bold tracking-wider uppercase text-foreground mb-4">More Courses</h3>
               <ul className="space-y-2.5 mb-6" role="list">
                 {moreLinks.map((l) => (
-                  <li key={l}>
-                    <a href="#courses" className="text-xs text-muted-foreground hover:text-gold transition-colors duration-150">
-                      {l}
-                    </a>
+                  <li key={l.href}>
+                    <Link href={l.href} className="text-xs text-muted-foreground hover:text-gold transition-colors duration-150">
+                      {l.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
