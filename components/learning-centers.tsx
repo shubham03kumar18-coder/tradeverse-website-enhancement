@@ -1,5 +1,9 @@
 import { BookOpen, BarChart2, Brain, Shield, Search, Users, ArrowRight } from "lucide-react"
 
+const PHONE = "919318336747"
+const makeWA = (center: string) =>
+  `https://wa.me/${PHONE}?text=Hi%20TRADEVERSE%20CITY%2C%20I%20want%20to%20start%20learning%20the%20stock%20market%20and%20would%20like%20more%20information%20about%20your%20training%20program.%0A%0AI%27m%20particularly%20interested%20in%20the%20${encodeURIComponent(center)}.`
+
 const centers = [
   {
     icon: <BookOpen className="w-6 h-6" />,
@@ -39,11 +43,13 @@ const centers = [
   },
 ]
 
+const WA_ALL = `https://wa.me/${PHONE}?text=Hi%20TRADEVERSE%20CITY%2C%20I%20want%20to%20start%20learning%20the%20stock%20market%20and%20would%20like%20more%20information%20about%20your%20training%20program.`
+
 export default function LearningCenters() {
   return (
     <section
       id="learning-centers"
-      className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden"
+      className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden scroll-mt-40"
       aria-label="Comprehensive Learning Platform"
     >
       {/* Subtle top separator glow */}
@@ -73,9 +79,11 @@ export default function LearningCenters() {
           {centers.map((center, i) => (
             <a
               key={center.title}
-              href="#contact"
+              href={makeWA(center.title)}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group relative flex flex-col gap-4 p-6 rounded-2xl border border-border bg-card/60 backdrop-blur-sm card-glow transition-all duration-300 hover:-translate-y-1"
-              aria-label={`${center.title}: ${center.desc}`}
+              aria-label={`${center.title}: ${center.desc} — opens WhatsApp`}
               style={{ animationDelay: `${i * 80}ms` }}
             >
               {/* Tag */}
@@ -108,10 +116,12 @@ export default function LearningCenters() {
         {/* View All CTA */}
         <div className="text-center mt-10">
           <a
-            href="#contact"
+            href={WA_ALL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-3 border border-gold/40 text-gold font-semibold rounded-xl hover:bg-gold/10 transition-all duration-200 text-sm"
           >
-            View All Learning Centers
+            Enquire About All Learning Centers
             <ArrowRight className="w-4 h-4" />
           </a>
         </div>

@@ -65,7 +65,7 @@ export default function ExitIntentPopup() {
       return
     }
     setPhoneError("")
-    const msg = `Hi! I want a FREE callback for Tradeverse City course guidance. My number is ${phone.trim()}. Please call me. 🙏`
+    const msg = `Hi TRADEVERSE CITY, I want to start learning the stock market and would like more information about your training program.\n\nI want a FREE callback for course guidance. My number is ${phone.trim()}. Please call me.`
     window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, "_blank")
     close()
   }

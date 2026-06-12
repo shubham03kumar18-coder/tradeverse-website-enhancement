@@ -1,9 +1,12 @@
 import { MessageCircle, Send, AtSign } from "lucide-react"
 
 const PHONE = "919318336747"
-const WA_CTA = `https://wa.me/${PHONE}?text=Hi%20Tradeverse%20City!%20%F0%9F%8C%9F%0AI%20am%20ready%20to%20start%20my%20trading%20journey.%20Please%20share%20the%20complete%20course%20details%2C%20fees%2C%20and%20next%20batch%20date.`
+const PHONE_DISPLAY = "+91 93183 36747"
+const WA_AUTO_MSG = "Hi%20TRADEVERSE%20CITY%2C%20I%20want%20to%20start%20learning%20the%20stock%20market%20and%20would%20like%20more%20information%20about%20your%20training%20program.%0A%0APlease%20share%20the%20complete%20course%20details%2C%20fees%2C%20and%20next%20batch%20schedule."
+const WA_CTA = `https://wa.me/${PHONE}?text=${WA_AUTO_MSG}`
 const TG_LINK = `https://t.me/+${PHONE}`
 const IG_LINK = "https://instagram.com/TRADEVERSE_CITY"
+const TEL_LINK = `tel:+${PHONE}`
 
 const learningLinks = [
   "Beginner Hub",
@@ -42,7 +45,7 @@ export default function Footer() {
       {/* CTA Section */}
       <section
         id="contact"
-        className="relative py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden"
+        className="relative py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden scroll-mt-40"
         aria-label="Contact and enroll"
       >
         <div
@@ -129,7 +132,7 @@ export default function Footer() {
                   style={{ color: "#25D366" }}
                 >
                   <MessageCircle className="w-3.5 h-3.5" />
-                  WhatsApp: +91 93183 36747
+                  WhatsApp: {PHONE_DISPLAY}
                 </a>
                 <a
                   href={TG_LINK}
@@ -139,7 +142,16 @@ export default function Footer() {
                   style={{ color: "#229ED9" }}
                 >
                   <Send className="w-3.5 h-3.5" />
-                  Telegram: +91 93183 36747
+                  Telegram: {PHONE_DISPLAY}
+                </a>
+                <a
+                  href={TEL_LINK}
+                  className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-lg border border-border hover:border-gold/40 hover:text-gold transition-all duration-200 text-muted-foreground"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5" aria-hidden="true">
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                  </svg>
+                  Call: {PHONE_DISPLAY}
                 </a>
               </div>
             </div>
@@ -213,8 +225,14 @@ export default function Footer() {
             <p className="text-xs text-muted-foreground">
               &copy; 2025 Tradeverse City. All Rights Reserved.
             </p>
-            <p className="text-xs text-muted-foreground text-center text-pretty">
-              Contact: +91 93183 36747 &nbsp;|&nbsp; @TRADEVERSE_CITY
+            <p className="text-xs text-muted-foreground text-center text-pretty flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+              <a href={TEL_LINK} className="hover:text-gold transition-colors duration-150">
+                {PHONE_DISPLAY}
+              </a>
+              <span aria-hidden="true">|</span>
+              <a href={IG_LINK} target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors duration-150">
+                @TRADEVERSE_CITY
+              </a>
             </p>
             <p className="text-xs text-muted-foreground">v3.0</p>
           </div>

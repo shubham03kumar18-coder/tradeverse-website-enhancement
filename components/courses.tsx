@@ -143,7 +143,7 @@ export default function Courses() {
   return (
     <section
       id="courses"
-      className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 overflow-hidden scroll-mt-40"
       style={{ background: "oklch(0.10 0 0)" }}
       aria-label="14 In-Depth Trading Courses"
     >
@@ -190,7 +190,7 @@ export default function Courses() {
 
         <div className="text-center mt-10">
           <a
-            href={`https://wa.me/${PHONE}?text=Hi%20Tradeverse%20City!%20%F0%9F%8C%9F%0AI%20am%20ready%20to%20start%20my%20trading%20journey.%20Please%20share%20the%20complete%20course%20details%2C%20fees%2C%20and%20next%20batch%20date.`}
+            href={`https://wa.me/${PHONE}?text=Hi%20TRADEVERSE%20CITY%2C%20I%20want%20to%20start%20learning%20the%20stock%20market%20and%20would%20like%20more%20information%20about%20your%20training%20program.%0A%0APlease%20share%20the%20complete%20course%20details%2C%20fees%2C%20and%20next%20batch%20date.`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-gold text-background font-bold rounded-xl hover:opacity-90 transition-all duration-200 shadow-lg shadow-gold/25 text-sm"

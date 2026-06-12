@@ -5,7 +5,10 @@ import Link from "next/link"
 import { Menu, X, ChevronDown } from "lucide-react"
 
 const PHONE = "919318336747"
-const WA_ENROLL = `https://wa.me/${PHONE}?text=Hi%20Tradeverse%20City!%20%F0%9F%93%88%0AI%20saw%20your%20website%20and%20I%27m%20interested%20in%20enrolling.%20Can%20you%20please%20share%20course%20details%20and%20fees%3F`
+const TEL_LINK = `tel:+${PHONE}`
+const TG_LINK = `https://t.me/+${PHONE}`
+const IG_LINK = "https://instagram.com/TRADEVERSE_CITY"
+const WA_ENROLL = `https://wa.me/${PHONE}?text=Hi%20TRADEVERSE%20CITY%2C%20I%20want%20to%20start%20learning%20the%20stock%20market%20and%20would%20like%20more%20information%20about%20your%20training%20program.%0A%0APlease%20share%20course%20details%20and%20fees.`
 
 const learningLinks = [
   { label: "Beginner Hub", href: "#learning-centers" },
@@ -137,7 +140,14 @@ export default function Navbar() {
           {/* Right actions */}
           <div className="hidden md:flex items-center gap-4">
             <a
-              href="https://instagram.com/TRADEVERSE_CITY"
+              href={TEL_LINK}
+              className="text-xs text-muted-foreground hover:text-gold transition-colors duration-200 font-medium"
+              aria-label="Call Tradeverse City"
+            >
+              +91 93183 36747
+            </a>
+            <a
+              href={IG_LINK}
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs text-muted-foreground hover:text-gold transition-colors duration-200 font-medium"
@@ -220,6 +230,37 @@ export default function Navbar() {
             >
               Enroll Now
             </a>
+            <div className="mt-2 pt-3 border-t border-border flex flex-col gap-2">
+              <a
+                href={TEL_LINK}
+                className="px-3 py-2.5 text-sm font-semibold text-muted-foreground hover:text-gold transition-colors text-center border border-border rounded-lg"
+                onClick={() => setMobileOpen(false)}
+              >
+                Call: +91 93183 36747
+              </a>
+              <div className="flex gap-2">
+                <a
+                  href={TG_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 px-3 py-2.5 text-xs font-bold text-center rounded-lg"
+                  style={{ background: "#229ED9", color: "#fff" }}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Telegram
+                </a>
+                <a
+                  href={IG_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 px-3 py-2.5 text-xs font-bold text-center rounded-lg"
+                  style={{ background: "linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)", color: "#fff" }}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Instagram
+                </a>
+              </div>
+            </div>
           </nav>
         </div>
       )}

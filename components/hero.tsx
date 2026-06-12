@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { ArrowRight, TrendingUp, BarChart2, Shield, Brain } from "lucide-react"
 
 const PHONE = "919318336747"
-const WA_HERO = `https://wa.me/${PHONE}?text=Hi%20Tradeverse%20City!%20%F0%9F%9A%80%0AI%20want%20to%20start%20learning%20stock%20market%20from%20scratch.%20Please%20guide%20me%20which%20course%20is%20best%20for%20a%20beginner.`
+const WA_HERO = `https://wa.me/${PHONE}?text=Hi%20TRADEVERSE%20CITY%2C%20I%20want%20to%20start%20learning%20the%20stock%20market%20and%20would%20like%20more%20information%20about%20your%20training%20program.%0A%0APlease%20guide%20me%20which%20course%20is%20best%20for%20a%20beginner.`
 
 // Animated counter hook
 function useCounter(target: number, duration: number = 2000, startOnView: boolean = true) {

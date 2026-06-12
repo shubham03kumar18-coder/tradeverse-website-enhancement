@@ -4,7 +4,7 @@ import { useState } from "react"
 
 const PHONE = "919318336747"
 
-const WA_FLOAT = `https://wa.me/${PHONE}?text=Hi%20Tradeverse%20City!%20I%20have%20a%20question%20about%20your%20courses.%20Can%20you%20help%20me%3F`
+const WA_FLOAT = `https://wa.me/${PHONE}?text=Hi%20TRADEVERSE%20CITY%2C%20I%20want%20to%20start%20learning%20the%20stock%20market%20and%20would%20like%20more%20information%20about%20your%20training%20program.`
 const TG_FLOAT = `https://t.me/+${PHONE}`
 const IG_FLOAT = "https://instagram.com/TRADEVERSE_CITY"
 

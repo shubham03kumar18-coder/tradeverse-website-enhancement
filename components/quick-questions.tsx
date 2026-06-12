@@ -27,7 +27,7 @@ const questions = [
   },
 ]
 
-const WA_OWN = `https://wa.me/${PHONE}?text=Hi%20Tradeverse%20City!%20I%20want%20to%20start%20learning%20the%20stock%20market%20and%20would%20like%20more%20information%20about%20your%20training%20program.`
+const WA_OWN = `https://wa.me/${PHONE}?text=Hi%20TRADEVERSE%20CITY%2C%20I%20want%20to%20start%20learning%20the%20stock%20market%20and%20would%20like%20more%20information%20about%20your%20training%20program.`
 
 export default function QuickQuestions() {
   return (

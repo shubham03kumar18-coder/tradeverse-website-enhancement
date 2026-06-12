@@ -35,12 +35,13 @@ export default function CourseModal({ course, onClose }: CourseModalProps) {
     }
   }, [onClose])
 
-  const waLink = `https://wa.me/${PHONE}?text=${course.waText}`
+  const AUTO_MSG = `Hi%20TRADEVERSE%20CITY%2C%20I%20want%20to%20start%20learning%20the%20stock%20market%20and%20would%20like%20more%20information%20about%20your%20training%20program.%0A%0A`
+  const waLink = `https://wa.me/${PHONE}?text=${AUTO_MSG}${course.waText}`
 
   const tgAskText = encodeURIComponent(
-    `Hi Tradeverse City! I want to ask about the "${course.title}" course. Can you share more details?`
+    `Hi TRADEVERSE CITY, I want to start learning the stock market and would like more information about your training program.\n\nI'm interested in the "${course.title}" course. Can you share more details?`
   )
-  const tgLink = `${TG_LINK}`
+  const tgLink = `${TG_LINK}?start=${tgAskText}`
 
   return (
     <div

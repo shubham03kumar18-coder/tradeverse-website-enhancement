@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 
 const PHONE = "919318336747"
-const WA_BATCH = `https://wa.me/${PHONE}?text=Hi!%20I%20want%20to%20reserve%20my%20seat%20in%20the%20upcoming%20batch.%20Please%20confirm%20availability.`
+const WA_BATCH = `https://wa.me/${PHONE}?text=Hi%20TRADEVERSE%20CITY%2C%20I%20want%20to%20start%20learning%20the%20stock%20market%20and%20would%20like%20more%20information%20about%20your%20training%20program.%0A%0AI%20want%20to%20reserve%20my%20seat%20in%20the%20upcoming%20batch.%20Please%20confirm%20availability.`
 
 function getTargetDate() {
   const d = new Date()

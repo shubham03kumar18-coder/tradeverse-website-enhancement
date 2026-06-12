@@ -46,7 +46,7 @@ export default function WhyUs() {
   return (
     <section
       id="about"
-      className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden"
+      className="relative py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden scroll-mt-40"
       aria-label="Why Choose Tradeverse City"
     >
       <div

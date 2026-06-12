@@ -47,7 +47,7 @@ export default function LeadCaptureForm() {
     if (!valid) return
 
     const selectedCourse = course === courseOptions[0] ? "Not specified" : course
-    const msg = `Hi Tradeverse City! 👋\nMy name is ${name.trim()} and my number is ${phone.trim()}.\nI'm interested in: ${selectedCourse}.\nPlease share complete details, fees & next batch date. 🙏`
+    const msg = `Hi TRADEVERSE CITY, I want to start learning the stock market and would like more information about your training program.\n\nMy name is ${name.trim()} and my number is ${phone.trim()}.\nI'm interested in: ${selectedCourse}.\nPlease share complete details, fees & next batch date.`
     window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, "_blank")
   }
 
