@@ -63,7 +63,7 @@ export default function Navbar() {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
             <Link
-              href="#"
+              href="/"
               className="px-4 py-2 text-sm text-foreground hover:text-gold transition-colors duration-200 font-medium"
             >
               Home
@@ -174,7 +174,7 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="md:hidden bg-card border-b border-border">
           <nav className="px-4 py-4 flex flex-col gap-1" aria-label="Mobile navigation">
-            <Link href="#" className="px-3 py-2.5 text-sm font-medium text-foreground hover:text-gold transition-colors" onClick={() => setMobileOpen(false)}>
+            <Link href="/" className="px-3 py-2.5 text-sm font-medium text-foreground hover:text-gold transition-colors" onClick={() => setMobileOpen(false)}>
               Home
             </Link>
             <button

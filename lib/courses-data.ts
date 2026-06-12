@@ -100,8 +100,8 @@ export const TRADING_COURSES_DATA: TradingCourse[] = [
         a: "This course is entirely focused on Indian markets — NSE, BSE, SEBI regulations, Indian brokers, and Indian market structure.",
       },
       {
-        q: "Contact Tradeverse City for complete details.",
-        a: "For complete course details, fees, schedules, enrollment information, and mentorship guidance, contact Tradeverse City on WhatsApp.",
+        q: "How do I get started with this course?",
+        a: "Simply reach out to Tradeverse City on WhatsApp or Telegram. Our team will walk you through the course structure, upcoming batches, mentorship options, and help you choose the right path forward.",
       },
     ],
     relatedCourses: [
@@ -197,8 +197,8 @@ export const TRADING_COURSES_DATA: TradingCourse[] = [
         a: "No. This course starts from the basics. However, completing Stock Market Fundamentals first is recommended.",
       },
       {
-        q: "Contact Tradeverse City for complete details.",
-        a: "For complete course details, fees, schedules, enrollment information, and mentorship guidance, contact Tradeverse City on WhatsApp.",
+        q: "How do I get started with this course?",
+        a: "Simply reach out to Tradeverse City on WhatsApp or Telegram. Our team will walk you through the course structure, upcoming batches, mentorship options, and help you choose the right path forward.",
       },
     ],
     relatedCourses: [
@@ -293,8 +293,8 @@ export const TRADING_COURSES_DATA: TradingCourse[] = [
         a: "Volume, momentum, and the number of prior reactions at the level are the key factors. The course covers these in detail with live market examples.",
       },
       {
-        q: "Contact Tradeverse City for complete details.",
-        a: "For complete course details, fees, schedules, enrollment information, and mentorship guidance, contact Tradeverse City on WhatsApp.",
+        q: "How do I get started with this course?",
+        a: "Simply reach out to Tradeverse City on WhatsApp or Telegram. Our team will walk you through the course structure, upcoming batches, mentorship options, and help you choose the right path forward.",
       },
     ],
     relatedCourses: [
@@ -389,8 +389,8 @@ export const TRADING_COURSES_DATA: TradingCourse[] = [
         a: "Price structure (higher highs/higher lows) is the primary tool. Moving averages (20 EMA and 200 MA) and ADX are powerful supporting indicators.",
       },
       {
-        q: "Contact Tradeverse City for complete details.",
-        a: "For complete course details, fees, schedules, enrollment information, and mentorship guidance, contact Tradeverse City on WhatsApp.",
+        q: "How do I get started with this course?",
+        a: "Simply reach out to Tradeverse City on WhatsApp or Telegram. Our team will walk you through the course structure, upcoming batches, mentorship options, and help you choose the right path forward.",
       },
     ],
     relatedCourses: [
@@ -485,8 +485,8 @@ export const TRADING_COURSES_DATA: TradingCourse[] = [
         a: "Completing Stock Market Fundamentals and Candlestick Analysis first is highly recommended. This course builds on those foundations.",
       },
       {
-        q: "Contact Tradeverse City for complete details.",
-        a: "For complete course details, fees, schedules, enrollment information, and mentorship guidance, contact Tradeverse City on WhatsApp.",
+        q: "How do I get started with this course?",
+        a: "Simply reach out to Tradeverse City on WhatsApp or Telegram. Our team will walk you through the course structure, upcoming batches, mentorship options, and help you choose the right path forward.",
       },
     ],
     relatedCourses: [
@@ -581,8 +581,8 @@ export const TRADING_COURSES_DATA: TradingCourse[] = [
         a: "Most students see improvement in chart reading within 4-6 weeks. Confident, consistent execution typically develops over 3-6 months of practice.",
       },
       {
-        q: "Contact Tradeverse City for complete details.",
-        a: "For complete course details, fees, schedules, enrollment information, and mentorship guidance, contact Tradeverse City on WhatsApp.",
+        q: "How do I get started with this course?",
+        a: "Simply reach out to Tradeverse City on WhatsApp or Telegram. Our team will walk you through the course structure, upcoming batches, mentorship options, and help you choose the right path forward.",
       },
     ],
     relatedCourses: [
@@ -677,8 +677,8 @@ export const TRADING_COURSES_DATA: TradingCourse[] = [
         a: "Yes. The course covers swing trading in both equities and F&O instruments, with specific adjustments for leverage and expiry management.",
       },
       {
-        q: "Contact Tradeverse City for complete details.",
-        a: "For complete course details, fees, schedules, enrollment information, and mentorship guidance, contact Tradeverse City on WhatsApp.",
+        q: "How do I get started with this course?",
+        a: "Simply reach out to Tradeverse City on WhatsApp or Telegram. Our team will walk you through the course structure, upcoming batches, mentorship options, and help you choose the right path forward.",
       },
     ],
     relatedCourses: [
@@ -773,8 +773,8 @@ export const TRADING_COURSES_DATA: TradingCourse[] = [
         a: "Intraday trading requires active monitoring during market hours (9:15 AM - 3:30 PM IST). It is challenging to combine with a full-time job. Swing trading is more compatible.",
       },
       {
-        q: "Contact Tradeverse City for complete details.",
-        a: "For complete course details, fees, schedules, enrollment information, and mentorship guidance, contact Tradeverse City on WhatsApp.",
+        q: "How do I get started with this course?",
+        a: "Simply reach out to Tradeverse City on WhatsApp or Telegram. Our team will walk you through the course structure, upcoming batches, mentorship options, and help you choose the right path forward.",
       },
     ],
     relatedCourses: [
@@ -870,8 +870,8 @@ export const TRADING_COURSES_DATA: TradingCourse[] = [
         a: "Yes. Starting with a smaller amount you are comfortable losing entirely reduces emotional pressure and allows you to focus on learning the process, not protecting large sums.",
       },
       {
-        q: "Contact Tradeverse City for complete details.",
-        a: "For complete course details, fees, schedules, enrollment information, and mentorship guidance, contact Tradeverse City on WhatsApp.",
+        q: "How do I get started with this course?",
+        a: "Simply reach out to Tradeverse City on WhatsApp or Telegram. Our team will walk you through the course structure, upcoming batches, mentorship options, and help you choose the right path forward.",
       },
     ],
     relatedCourses: [
@@ -967,8 +967,8 @@ export const TRADING_COURSES_DATA: TradingCourse[] = [
         a: "Psychology is woven throughout all courses at Tradeverse City. This dedicated course provides deeper, focused training on the mental dimension of trading.",
       },
       {
-        q: "Contact Tradeverse City for complete details.",
-        a: "For complete course details, fees, schedules, enrollment information, and mentorship guidance, contact Tradeverse City on WhatsApp.",
+        q: "How do I get started with this course?",
+        a: "Simply reach out to Tradeverse City on WhatsApp or Telegram. Our team will walk you through the course structure, upcoming batches, mentorship options, and help you choose the right path forward.",
       },
     ],
     relatedCourses: [
@@ -1063,8 +1063,8 @@ export const TRADING_COURSES_DATA: TradingCourse[] = [
         a: "Weekly options expire every Thursday, providing higher leverage but faster time decay. Monthly options have more time, higher premiums, and are better suited for some strategies.",
       },
       {
-        q: "Contact Tradeverse City for complete details.",
-        a: "For complete course details, fees, schedules, enrollment information, and mentorship guidance, contact Tradeverse City on WhatsApp.",
+        q: "How do I get started with this course?",
+        a: "Simply reach out to Tradeverse City on WhatsApp or Telegram. Our team will walk you through the course structure, upcoming batches, mentorship options, and help you choose the right path forward.",
       },
     ],
     relatedCourses: [
@@ -1159,8 +1159,8 @@ export const TRADING_COURSES_DATA: TradingCourse[] = [
         a: "For short-term directional trades with leverage, stock futures provide capital efficiency. For longer-term positions, equity is generally preferred due to no expiry and no rollover costs.",
       },
       {
-        q: "Contact Tradeverse City for complete details.",
-        a: "For complete course details, fees, schedules, enrollment information, and mentorship guidance, contact Tradeverse City on WhatsApp.",
+        q: "How do I get started with this course?",
+        a: "Simply reach out to Tradeverse City on WhatsApp or Telegram. Our team will walk you through the course structure, upcoming batches, mentorship options, and help you choose the right path forward.",
       },
     ],
     relatedCourses: [
@@ -1255,8 +1255,8 @@ export const TRADING_COURSES_DATA: TradingCourse[] = [
         a: "Asset allocation is highly personal and depends on income, risk tolerance, goals, and time horizon. Tradeverse City provides personalised guidance through mentorship.",
       },
       {
-        q: "Contact Tradeverse City for complete details.",
-        a: "For complete course details, fees, schedules, enrollment information, and mentorship guidance, contact Tradeverse City on WhatsApp.",
+        q: "How do I get started with this course?",
+        a: "Simply reach out to Tradeverse City on WhatsApp or Telegram. Our team will walk you through the course structure, upcoming batches, mentorship options, and help you choose the right path forward.",
       },
     ],
     relatedCourses: [
@@ -1351,8 +1351,8 @@ export const TRADING_COURSES_DATA: TradingCourse[] = [
         a: "Research-backed trades have a higher probability of success and allow more accurate risk management because you understand why the trade should work, not just that it looks good on a chart.",
       },
       {
-        q: "Contact Tradeverse City for complete details.",
-        a: "For complete course details, fees, schedules, enrollment information, and mentorship guidance, contact Tradeverse City on WhatsApp.",
+        q: "How do I get started with this course?",
+        a: "Simply reach out to Tradeverse City on WhatsApp or Telegram. Our team will walk you through the course structure, upcoming batches, mentorship options, and help you choose the right path forward.",
       },
     ],
     relatedCourses: [

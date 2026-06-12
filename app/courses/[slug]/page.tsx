@@ -101,14 +101,10 @@ export default async function CourseDetailPage({ params }: Params) {
             {course.intro}
           </p>
 
-          {/* No-pricing notice */}
-          <div className="inline-block px-5 py-3 rounded-xl border border-gold/20 bg-card/60 mb-8">
-            <p className="text-xs text-muted-foreground leading-relaxed text-pretty max-w-md">
-              <span className="text-gold font-semibold">No pricing displayed. </span>
-              For complete course details, fees, schedules, enrollment information, and mentorship guidance, contact{" "}
-              <span className="text-foreground font-semibold">Tradeverse City</span> on WhatsApp.
-            </p>
-          </div>
+          {/* Enquiry nudge */}
+          <p className="text-xs text-muted-foreground mb-8 text-pretty max-w-sm mx-auto">
+            Connect with us for batch schedules, personalised mentorship, and everything you need to enrol with clarity.
+          </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
