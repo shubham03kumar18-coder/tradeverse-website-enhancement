@@ -4,8 +4,7 @@ import { MessageCircle, Send, AtSign, Phone, MapPin } from "lucide-react"
 
 const PHONE = "919318336747"
 const PHONE_DISPLAY = "+91 93183 36747"
-const WA_AUTO_MSG = "Hi%20TRADEVERSE%20CITY%2C%20I%20want%20to%20start%20learning%20the%20stock%20market%20and%20would%20like%20more%20information%20about%20your%20training%20program.%0A%0APlease%20share%20the%20complete%20course%20details%2C%20fees%2C%20and%20next%20batch%20schedule."
-const WA_CTA = `https://wa.me/${PHONE}?text=${WA_AUTO_MSG}`
+const WA_CTA = `https://wa.me/${PHONE}?text=Hi%20TRADEVERSE%20CITY%2C%20I%20want%20to%20start%20learning%20the%20stock%20market%20and%20would%20like%20more%20information%20about%20your%20training%20program.`
 const TG_LINK = `https://t.me/+${PHONE}`
 const IG_LINK = "https://instagram.com/TRADEVERSE_CITY"
 const TEL_LINK = `tel:+${PHONE}`
@@ -341,7 +340,7 @@ export default function Footer() {
                 @TRADEVERSE_CITY
               </a>
             </p>
-            <p className="text-xs text-muted-foreground">v3.0</p>
+            
           </div>
         </div>
       </footer>
