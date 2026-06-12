@@ -1,5 +1,10 @@
 import { MessageCircle, Send, AtSign } from "lucide-react"
 
+const PHONE = "919318336747"
+const WA_CTA = `https://wa.me/${PHONE}?text=Hi%20Tradeverse%20City!%20%F0%9F%8C%9F%0AI%20am%20ready%20to%20start%20my%20trading%20journey.%20Please%20share%20the%20complete%20course%20details%2C%20fees%2C%20and%20next%20batch%20date.`
+const TG_LINK = `https://t.me/+${PHONE}`
+const IG_LINK = "https://instagram.com/TRADEVERSE_CITY"
+
 const learningLinks = [
   "Beginner Hub",
   "Technical Analysis Center",
@@ -45,8 +50,6 @@ export default function Footer() {
           style={{ background: "linear-gradient(90deg, transparent, oklch(0.78 0.14 85 / 30%), transparent)" }}
           aria-hidden="true"
         />
-
-        {/* Glow */}
         <div
           className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] opacity-[0.05]"
           style={{ background: "radial-gradient(ellipse, oklch(0.78 0.14 85) 0%, transparent 70%)" }}
@@ -62,38 +65,38 @@ export default function Footer() {
           </h2>
           <p className="text-muted-foreground text-base leading-relaxed mb-10 text-pretty max-w-xl mx-auto">
             For complete course details, fees, schedules, enrollment information, and mentorship
-            guidance, contact Tradeverse City on WhatsApp.
+            guidance — contact Tradeverse City directly.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/91XXXXXXXXXX"
+              href={WA_CTA}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 shadow-lg"
+              className="group flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 shadow-lg hover:scale-105"
               style={{ background: "#25D366", color: "#fff", boxShadow: "0 4px 20px rgba(37,211,102,0.25)" }}
             >
               <MessageCircle className="w-4 h-4" />
               WhatsApp Enquiry
             </a>
             <a
-              href="https://t.me/tradeversecity"
+              href={TG_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 shadow-lg"
+              className="group flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl font-bold text-sm transition-all duration-200 shadow-lg hover:scale-105"
               style={{ background: "#229ED9", color: "#fff", boxShadow: "0 4px 20px rgba(34,158,217,0.25)" }}
             >
               <Send className="w-4 h-4" />
               Telegram Enquiry
             </a>
             <a
-              href="https://instagram.com/tradeverse_city"
+              href={IG_LINK}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl font-bold text-sm border border-border hover:border-gold/50 text-foreground hover:text-gold transition-all duration-200"
             >
               <AtSign className="w-4 h-4" />
-              Instagram
+              @TRADEVERSE_CITY
             </a>
           </div>
         </div>
@@ -115,18 +118,30 @@ export default function Footer() {
                 </div>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed mb-4 text-pretty">
-                India&apos;s premium stock market education platform. Empowering traders with knowledge, proven strategies, and guidance.
+                {"India's premium stock market education platform. Empowering traders with knowledge, proven strategies, and guidance."}
               </p>
-              <a
-                href="https://wa.me/91XXXXXXXXXX"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-lg border border-border hover:border-gold/40 hover:text-gold transition-all duration-200"
-                style={{ color: "#25D366" }}
-              >
-                <MessageCircle className="w-3.5 h-3.5" />
-                WhatsApp Us
-              </a>
+              <div className="flex flex-col gap-2">
+                <a
+                  href={WA_CTA}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-lg border border-border hover:border-gold/40 hover:text-gold transition-all duration-200"
+                  style={{ color: "#25D366" }}
+                >
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  WhatsApp: +91 93183 36747
+                </a>
+                <a
+                  href={TG_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-lg border border-border hover:border-gold/40 transition-all duration-200"
+                  style={{ color: "#229ED9" }}
+                >
+                  <Send className="w-3.5 h-3.5" />
+                  Telegram: +91 93183 36747
+                </a>
+              </div>
             </div>
 
             {/* Learning Platform */}
@@ -172,7 +187,7 @@ export default function Footer() {
 
               <div className="flex flex-col gap-2">
                 <a
-                  href="https://t.me/tradeversecity"
+                  href={TG_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-xs text-muted-foreground hover:text-gold transition-colors"
@@ -181,13 +196,13 @@ export default function Footer() {
                   Telegram Channel
                 </a>
                 <a
-                  href="https://instagram.com/tradeverse_city"
+                  href={IG_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-xs text-muted-foreground hover:text-gold transition-colors"
                 >
                   <AtSign className="w-3.5 h-3.5" />
-                  @tradeverse_city
+                  @TRADEVERSE_CITY
                 </a>
               </div>
             </div>
@@ -199,9 +214,9 @@ export default function Footer() {
               &copy; 2025 Tradeverse City. All Rights Reserved.
             </p>
             <p className="text-xs text-muted-foreground text-center text-pretty">
-              For complete details, fees, schedules, enrollment information, and mentorship guidance, contact Tradeverse City on WhatsApp.
+              Contact: +91 93183 36747 &nbsp;|&nbsp; @TRADEVERSE_CITY
             </p>
-            <p className="text-xs text-muted-foreground">v2.0</p>
+            <p className="text-xs text-muted-foreground">v3.0</p>
           </div>
         </div>
       </footer>

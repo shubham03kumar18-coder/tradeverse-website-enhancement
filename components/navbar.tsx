@@ -4,6 +4,9 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X, ChevronDown } from "lucide-react"
 
+const PHONE = "919318336747"
+const WA_ENROLL = `https://wa.me/${PHONE}?text=Hi%20Tradeverse%20City!%20%F0%9F%93%88%0AI%20saw%20your%20website%20and%20I%27m%20interested%20in%20enrolling.%20Can%20you%20please%20share%20course%20details%20and%20fees%3F`
+
 const learningLinks = [
   { label: "Beginner Hub", href: "#learning-centers" },
   { label: "Technical Analysis Center", href: "#learning-centers" },
@@ -134,15 +137,17 @@ export default function Navbar() {
           {/* Right actions */}
           <div className="hidden md:flex items-center gap-4">
             <a
-              href="https://instagram.com/tradeverse_city"
+              href="https://instagram.com/TRADEVERSE_CITY"
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs text-muted-foreground hover:text-gold transition-colors duration-200 font-medium"
             >
-              @tradeverse_city
+              @TRADEVERSE_CITY
             </a>
             <a
-              href="#contact"
+              href={WA_ENROLL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-5 py-2 bg-gold text-background text-sm font-bold rounded-lg hover:opacity-90 transition-all duration-200 shadow-lg shadow-gold/20"
             >
               Enroll Now
@@ -207,7 +212,9 @@ export default function Navbar() {
               Contact
             </Link>
             <a
-              href="#contact"
+              href={WA_ENROLL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-2 px-5 py-2.5 bg-gold text-background text-sm font-bold rounded-lg text-center"
               onClick={() => setMobileOpen(false)}
             >

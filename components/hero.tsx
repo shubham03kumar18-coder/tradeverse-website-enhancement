@@ -3,6 +3,9 @@
 import { useEffect, useRef, useState } from "react"
 import { ArrowRight, TrendingUp, BarChart2, Shield, Brain } from "lucide-react"
 
+const PHONE = "919318336747"
+const WA_HERO = `https://wa.me/${PHONE}?text=Hi%20Tradeverse%20City!%20%F0%9F%9A%80%0AI%20want%20to%20start%20learning%20stock%20market%20from%20scratch.%20Please%20guide%20me%20which%20course%20is%20best%20for%20a%20beginner.`
+
 // Animated counter hook
 function useCounter(target: number, duration: number = 2000, startOnView: boolean = true) {
   const [count, setCount] = useState(0)
@@ -83,7 +86,6 @@ function StatCard({
   )
 }
 
-// Floating orbital element
 function OrbitalRing({ size, speed, opacity, dotColor }: { size: number; speed: string; opacity: number; dotColor: string }) {
   return (
     <div
@@ -134,7 +136,7 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      {/* Orbital rings (decorative) */}
+      {/* Orbital rings */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true">
         <OrbitalRing size={320} speed="animate-orbit-cw" opacity={0.4} dotColor="oklch(0.78 0.14 85)" />
         <OrbitalRing size={480} speed="animate-orbit-ccw" opacity={0.25} dotColor="oklch(0.70 0.12 85)" />
@@ -157,9 +159,9 @@ export default function Hero() {
       ))}
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center flex-1 px-4 sm:px-6 lg:px-8 pt-24 pb-12 max-w-7xl mx-auto w-full">
+      <div className="relative z-10 flex flex-col items-center justify-center flex-1 px-4 sm:px-6 lg:px-8 pt-28 pb-12 max-w-7xl mx-auto w-full">
 
-        {/* Floating Brand Name — TRADEVERSE CITY */}
+        {/* Floating Brand Name */}
         <div className="text-center mb-8 animate-float" aria-label="Tradeverse City brand">
           <div className="inline-flex flex-col items-center gap-1">
             <span className="text-[11px] tracking-[0.4em] text-gold/70 font-semibold uppercase mb-2">
@@ -180,9 +182,7 @@ export default function Hero() {
 
         {/* Main Headline */}
         <div className="text-center max-w-4xl mx-auto mb-6">
-          <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-foreground leading-tight text-balance"
-          >
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-foreground leading-tight text-balance">
             Master the{" "}
             <span className="text-gold">Stock Market</span>
             <br />
@@ -203,7 +203,9 @@ export default function Hero() {
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
           <a
-            href="#contact"
+            href={WA_HERO}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group flex items-center justify-center gap-2 px-8 py-3.5 bg-gold text-background font-bold rounded-xl hover:opacity-90 transition-all duration-200 shadow-lg shadow-gold/25 text-sm"
           >
             Start Learning Today
@@ -218,42 +220,12 @@ export default function Hero() {
         </div>
 
         {/* Stats Section */}
-        <div
-          className="w-full max-w-4xl mx-auto"
-          role="region"
-          aria-label="Platform statistics"
-        >
+        <div className="w-full max-w-4xl mx-auto" role="region" aria-label="Platform statistics">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <StatCard
-              value={10000}
-              suffix="+"
-              label="Students Trained"
-              delay={0}
-              icon={<TrendingUp className="w-5 h-5" />}
-            />
-            <StatCard
-              value={14}
-              suffix="+"
-              label="Structured Courses"
-              delay={150}
-              icon={<BarChart2 className="w-5 h-5" />}
-            />
-            <StatCard
-              value={7}
-              suffix="+"
-              label="Learning Centers"
-              delay={300}
-              icon={<Shield className="w-5 h-5" />}
-            />
-            <StatCard
-              value={5}
-              suffix="★"
-              label="Student Rating · 4.6"
-              delay={450}
-              icon={<Brain className="w-5 h-5" />}
-              isRating
-              ratingValue="4.6 ★"
-            />
+            <StatCard value={10000} suffix="+" label="Students Trained" delay={0} icon={<TrendingUp className="w-5 h-5" />} />
+            <StatCard value={14} suffix="+" label="Structured Courses" delay={150} icon={<BarChart2 className="w-5 h-5" />} />
+            <StatCard value={7} suffix="+" label="Learning Centers" delay={300} icon={<Shield className="w-5 h-5" />} />
+            <StatCard value={5} suffix="★" label="Student Rating · 4.6" delay={450} icon={<Brain className="w-5 h-5" />} isRating ratingValue="4.6 ★" />
           </div>
         </div>
       </div>
