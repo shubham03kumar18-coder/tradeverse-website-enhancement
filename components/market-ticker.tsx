@@ -1,3 +1,8 @@
+"use client"
+
+import { useState } from "react"
+import { Pause, Play } from "lucide-react"
+
 const tickerItems = [
   { symbol: "NIFTY 50", price: "22,456.80", change: "+0.34%", up: true },
   { symbol: "BANKNIFTY", price: "48,234.15", change: "+0.28%", up: true },
@@ -25,30 +30,47 @@ function TickerItem({ symbol, price, change, up }: { symbol: string; price: stri
 }
 
 export default function MarketTicker() {
+  const [paused, setPaused] = useState(false)
   const doubled = [...tickerItems, ...tickerItems]
 
   return (
     <div
       className="w-full overflow-hidden border-b border-border"
       style={{ background: "oklch(0.11 0 0)", height: "36px" }}
-      role="marquee"
-      aria-label="Live market prices"
+      aria-label="Sample market data — for illustration only"
     >
       <div className="flex items-center h-full">
+        {/* Label */}
         <span
           className="text-[9px] font-black tracking-[0.2em] uppercase px-3 whitespace-nowrap border-r border-gold/20 mr-3 shrink-0"
           style={{ color: "oklch(0.78 0.14 85)" }}
           aria-hidden="true"
         >
-          LIVE
+          SAMPLE
         </span>
+
+        {/* Scrolling ticker */}
         <div className="overflow-hidden flex-1">
-          <div className="animate-marquee flex items-center" style={{ width: "max-content" }}>
+          <div
+            className={`flex items-center ${paused ? "" : "animate-marquee"}`}
+            style={{ width: "max-content" }}
+            aria-live="off"
+          >
             {doubled.map((item, i) => (
               <TickerItem key={`${item.symbol}-${i}`} {...item} />
             ))}
           </div>
         </div>
+
+        {/* Pause / Resume button */}
+        <button
+          onClick={() => setPaused((p) => !p)}
+          className="shrink-0 px-2 h-full flex items-center border-l border-gold/20 text-muted-foreground hover:text-gold transition-colors duration-200"
+          aria-label={paused ? "Resume market ticker" : "Pause market ticker"}
+          title={paused ? "Resume" : "Pause"}
+        >
+          {paused ? <Play className="w-3 h-3" /> : <Pause className="w-3 h-3" />}
+        </button>
       </div>
     </div>
   )

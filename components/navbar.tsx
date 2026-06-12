@@ -105,26 +105,26 @@ export default function Navbar() {
               {coursesOpen && (
                 <div className="absolute top-full left-0 mt-1 w-64 bg-card border border-border rounded-xl shadow-2xl shadow-black/60 py-2 z-50">
                   {courseLinks.map((item) => (
-                    <a
+                    <Link
                       key={item.label}
                       href={item.href}
                       className="block px-4 py-2.5 text-sm text-muted-foreground hover:text-gold hover:bg-muted transition-colors duration-150"
                     >
                       {item.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               )}
             </div>
 
             <Link
-              href="#about"
+              href="/#about"
               className="px-4 py-2 text-sm text-foreground hover:text-gold transition-colors duration-200 font-medium"
             >
               About Us
             </Link>
             <Link
-              href="#contact"
+              href="/#contact"
               className="px-4 py-2 text-sm text-foreground hover:text-gold transition-colors duration-200 font-medium"
             >
               Contact Us
@@ -209,10 +209,10 @@ export default function Navbar() {
                 ))}
               </div>
             )}
-            <Link href="#about" className="px-3 py-2.5 text-sm font-medium text-foreground hover:text-gold transition-colors" onClick={() => setMobileOpen(false)}>
+            <Link href="/#about" className="px-3 py-2.5 text-sm font-medium text-foreground hover:text-gold transition-colors" onClick={() => setMobileOpen(false)}>
               About Us
             </Link>
-            <Link href="#contact" className="px-3 py-2.5 text-sm font-medium text-foreground hover:text-gold transition-colors" onClick={() => setMobileOpen(false)}>
+            <Link href="/#contact" className="px-3 py-2.5 text-sm font-medium text-foreground hover:text-gold transition-colors" onClick={() => setMobileOpen(false)}>
               Contact Us
             </Link>
             <a
