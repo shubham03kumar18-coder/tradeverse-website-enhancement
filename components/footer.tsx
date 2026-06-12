@@ -91,10 +91,7 @@ export default function Footer() {
               href={WA_CTA}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col items-center gap-3 p-6 rounded-2xl border border-border hover:border-green-500/50 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 bg-card"
-              style={{ boxShadow: "0 0 0 0 rgba(37,211,102,0)" }}
-              onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 8px 30px rgba(37,211,102,0.15)")}
-              onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "0 0 0 0 rgba(37,211,102,0)")}
+              className="group flex flex-col items-center gap-3 p-6 rounded-2xl border border-border hover:border-green-500/50 transition-all duration-200 hover:shadow-[0_8px_30px_rgba(37,211,102,0.15)] hover:-translate-y-0.5 bg-card"
               aria-label="WhatsApp Enquiry"
             >
               <div
@@ -124,9 +121,7 @@ export default function Footer() {
               href={TG_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col items-center gap-3 p-6 rounded-2xl border border-border hover:border-sky-400/50 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 bg-card"
-              onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 8px 30px rgba(34,158,217,0.15)")}
-              onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
+              className="group flex flex-col items-center gap-3 p-6 rounded-2xl border border-border hover:border-sky-400/50 transition-all duration-200 hover:shadow-[0_8px_30px_rgba(34,158,217,0.15)] hover:-translate-y-0.5 bg-card"
               aria-label="Telegram Enquiry"
             >
               <div
@@ -156,9 +151,7 @@ export default function Footer() {
               href={IG_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col items-center gap-3 p-6 rounded-2xl border border-border hover:border-pink-500/50 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 bg-card"
-              onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 8px 30px rgba(253,29,29,0.12)")}
-              onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
+              className="group flex flex-col items-center gap-3 p-6 rounded-2xl border border-border hover:border-pink-500/50 transition-all duration-200 hover:shadow-[0_8px_30px_rgba(253,29,29,0.12)] hover:-translate-y-0.5 bg-card"
               aria-label="Follow on Instagram"
             >
               <div
