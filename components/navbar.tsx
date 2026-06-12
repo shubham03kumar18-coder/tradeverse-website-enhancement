@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Menu, X, ChevronDown } from "lucide-react"
 
 const PHONE = "919318336747"
@@ -53,12 +54,15 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-18">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative">
-              <div className="w-9 h-9 rounded-lg bg-gold flex items-center justify-center font-bold text-background text-sm">
-                TC
-              </div>
-              <div className="absolute inset-0 rounded-lg bg-gold opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-300" />
+          <Link href="/" className="flex items-center gap-2 group" aria-label="Tradeverse City Home">
+            <div className="relative w-10 h-10 md:w-11 md:h-11 flex-shrink-0">
+              <Image
+                src="/tradeverse-city-logo.png"
+                alt="Tradeverse City Logo"
+                fill
+                className="object-contain rounded-full"
+                priority
+              />
             </div>
             <div className="flex flex-col leading-none">
               <span className="font-bold text-foreground text-sm tracking-wide">TRADEVERSE</span>
