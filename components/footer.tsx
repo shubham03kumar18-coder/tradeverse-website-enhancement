@@ -66,7 +66,7 @@ export default function Footer() {
           {/* Header */}
           <div className="text-center mb-12">
             <span className="inline-block text-[11px] tracking-[0.4em] text-gold font-semibold uppercase mb-4 px-4 py-1.5 rounded-full border border-gold/20 bg-gold/5">
-              Contact Us
+              Contact Us — Reach Out Any Time
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-foreground text-balance mb-4">
               Ready to Start Your Trading Journey?

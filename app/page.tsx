@@ -5,6 +5,7 @@ import Hero from "@/components/hero"
 import LearningCenters from "@/components/learning-centers"
 import Courses from "@/components/courses"
 import WhyUs from "@/components/why-us"
+import AboutUs from "@/components/about"
 import Testimonials from "@/components/testimonials"
 import LeadCaptureForm from "@/components/lead-capture-form"
 import QuickQuestions from "@/components/quick-questions"
@@ -31,6 +32,7 @@ export default function Page() {
       <LearningCenters />
       <Courses />
       <WhyUs />
+      <AboutUs />
       <Testimonials />
       <LeadCaptureForm />
       <QuickQuestions />

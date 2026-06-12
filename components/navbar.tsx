@@ -131,13 +131,13 @@ export default function Navbar() {
               href="#about"
               className="px-4 py-2 text-sm text-foreground hover:text-gold transition-colors duration-200 font-medium"
             >
-              About
+              About Us
             </Link>
             <Link
               href="#contact"
               className="px-4 py-2 text-sm text-foreground hover:text-gold transition-colors duration-200 font-medium"
             >
-              Contact
+              Contact Us
             </Link>
           </nav>
 
@@ -220,10 +220,10 @@ export default function Navbar() {
               </div>
             )}
             <Link href="#about" className="px-3 py-2.5 text-sm font-medium text-foreground hover:text-gold transition-colors" onClick={() => setMobileOpen(false)}>
-              About
+              About Us
             </Link>
             <Link href="#contact" className="px-3 py-2.5 text-sm font-medium text-foreground hover:text-gold transition-colors" onClick={() => setMobileOpen(false)}>
-              Contact
+              Contact Us
             </Link>
             <a
               href={WA_ENROLL}
