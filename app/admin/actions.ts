@@ -23,6 +23,32 @@ function slugify(text: string) {
     .trim()
 }
 
+/** Upload a file to Supabase Storage and return its public/path URL */
+async function uploadFile(
+  admin: ReturnType<typeof createAdminClient>,
+  bucket: string,
+  folder: string,
+  file: File,
+): Promise<string> {
+  const ext = file.name.split(".").pop() ?? "bin"
+  const filename = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+  const arrayBuffer = await file.arrayBuffer()
+  const buffer = Buffer.from(arrayBuffer)
+
+  const { error } = await admin.storage.from(bucket).upload(filename, buffer, {
+    contentType: file.type,
+    upsert: false,
+  })
+  if (error) throw new Error(`Storage upload failed: ${error.message}`)
+  return filename
+}
+
+/** Get a public URL for cover images (covers bucket is public) */
+function getCoverPublicUrl(admin: ReturnType<typeof createAdminClient>, path: string): string {
+  const { data } = admin.storage.from("covers").getPublicUrl(path)
+  return data.publicUrl
+}
+
 export async function createEbook(formData: FormData) {
   await requireAdmin()
   const admin = createAdminClient()
@@ -35,22 +61,36 @@ export async function createEbook(formData: FormData) {
   const author = formData.get("author") as string
   const tagsStr = formData.get("tags") as string
   const pageCountStr = formData.get("page_count") as string
-  const coverUrl = formData.get("cover_url") as string
+  const coverFile = formData.get("cover_file") as File | null
+  const pdfFile = formData.get("pdf_file") as File | null
+
+  if (!pdfFile || pdfFile.size === 0) throw new Error("PDF file is required")
 
   const slug = slugify(title)
   const tags = tagsStr ? tagsStr.split(",").map((t) => t.trim()).filter(Boolean) : []
 
+  // Upload PDF to private 'ebooks' bucket
+  const pdfPath = await uploadFile(admin, "ebooks", "pdfs", pdfFile)
+
+  // Upload cover to public 'covers' bucket (optional)
+  let coverUrl: string | null = null
+  if (coverFile && coverFile.size > 0) {
+    const coverPath = await uploadFile(admin, "covers", "ebooks", coverFile)
+    coverUrl = getCoverPublicUrl(admin, coverPath)
+  }
+
   const { error } = await admin.from("ebooks").insert({
     title,
     slug,
-    description,
+    description: description || null,
     price_inr: isFree ? 0 : parseInt(priceStr || "0", 10),
     is_free: isFree,
     is_published: isPublished,
     author: author || "Tradeverse City",
     tags,
     page_count: pageCountStr ? parseInt(pageCountStr, 10) : null,
-    cover_url: coverUrl || null,
+    cover_url: coverUrl,
+    pdf_path: pdfPath,
   })
 
   if (error) throw new Error(error.message)
@@ -71,22 +111,37 @@ export async function updateEbook(id: string, formData: FormData) {
   const author = formData.get("author") as string
   const tagsStr = formData.get("tags") as string
   const pageCountStr = formData.get("page_count") as string
-  const coverUrl = formData.get("cover_url") as string
-  const pdfPath = formData.get("pdf_path") as string
+  const coverFile = formData.get("cover_file") as File | null
+  const pdfFile = formData.get("pdf_file") as File | null
 
   const tags = tagsStr ? tagsStr.split(",").map((t) => t.trim()).filter(Boolean) : []
 
+  // Fetch existing record to preserve existing paths if no new file uploaded
+  const { data: existing } = await admin.from("ebooks").select("cover_url, pdf_path").eq("id", id).single()
+
+  let pdfPath = existing?.pdf_path ?? null
+  let coverUrl = existing?.cover_url ?? null
+
+  if (pdfFile && pdfFile.size > 0) {
+    pdfPath = await uploadFile(admin, "ebooks", "pdfs", pdfFile)
+  }
+  if (coverFile && coverFile.size > 0) {
+    const coverPath = await uploadFile(admin, "covers", "ebooks", coverFile)
+    coverUrl = getCoverPublicUrl(admin, coverPath)
+  }
+
   const { error } = await admin.from("ebooks").update({
     title,
-    description,
+    description: description || null,
     price_inr: isFree ? 0 : parseInt(priceStr || "0", 10),
     is_free: isFree,
     is_published: isPublished,
     author: author || "Tradeverse City",
     tags,
     page_count: pageCountStr ? parseInt(pageCountStr, 10) : null,
-    cover_url: coverUrl || null,
-    pdf_path: pdfPath || null,
+    cover_url: coverUrl,
+    pdf_path: pdfPath,
+    updated_at: new Date().toISOString(),
   }).eq("id", id)
 
   if (error) throw new Error(error.message)

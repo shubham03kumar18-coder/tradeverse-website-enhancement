@@ -40,7 +40,7 @@ export default async function ReadEbookPage({ params }: Props) {
   let pdfUrl: string | null = null
   if (ebook.pdf_path) {
     const { data: signed } = await supabase.storage
-      .from("ebook-pdfs")
+      .from("ebooks")
       .createSignedUrl(ebook.pdf_path, 1800)
     pdfUrl = signed?.signedUrl ?? null
   }
