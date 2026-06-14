@@ -2,33 +2,24 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Menu, X, ChevronDown } from "lucide-react"
+import { LEARNING_HUBS, TRADING_COURSES, TEL_LINK, TG_LINK, IG_LINK, makeWA } from "@/lib/constants"
 
 const PHONE = "919318336747"
-const TEL_LINK = `tel:+${PHONE}`
-const TG_LINK = `https://t.me/+${PHONE}`
-const IG_LINK = "https://instagram.com/TRADEVERSE_CITY"
-const WA_ENROLL = `https://wa.me/${PHONE}?text=Hi%20TRADEVERSE%20CITY%2C%20I%20want%20to%20start%20learning%20the%20stock%20market%20and%20would%20like%20more%20information%20about%20your%20training%20program.%0A%0APlease%20share%20course%20details%20and%20fees.`
+const WA_ENROLL = makeWA("Please share course details and fees.")
 
-const learningLinks = [
-  { label: "Beginner Hub", href: "#learning-centers" },
-  { label: "Technical Analysis Center", href: "#learning-centers" },
-  { label: "Trading Psychology Center", href: "#learning-centers" },
-  { label: "Risk Management Center", href: "#learning-centers" },
-  { label: "Market Research Center", href: "#learning-centers" },
-  { label: "Community Learning Hub", href: "#learning-centers" },
-]
+const learningLinks = LEARNING_HUBS.map((h) => ({
+  label: h.label,
+  href: `/learning/${h.slug}`,
+  desc: h.desc,
+}))
 
-const courseLinks = [
-  { label: "Stock Market Fundamentals", href: "#courses" },
-  { label: "Candlestick Analysis", href: "#courses" },
-  { label: "Price Action Trading", href: "#courses" },
-  { label: "Swing Trading", href: "#courses" },
-  { label: "Intraday Trading", href: "#courses" },
-  { label: "Options Trading Fundamentals", href: "#courses" },
-  { label: "Risk Management", href: "#courses" },
-  { label: "Trading Psychology", href: "#courses" },
-]
+const courseLinks = TRADING_COURSES.map((c) => ({
+  label: c.label,
+  href: `/courses/${c.slug}`,
+  desc: c.desc,
+}))
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -53,12 +44,15 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-18">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative">
-              <div className="w-9 h-9 rounded-lg bg-gold flex items-center justify-center font-bold text-background text-sm">
-                TC
-              </div>
-              <div className="absolute inset-0 rounded-lg bg-gold opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-300" />
+          <Link href="/" className="flex items-center gap-2 group" aria-label="Tradeverse City Home">
+            <div className="relative w-10 h-10 md:w-11 md:h-11 flex-shrink-0">
+              <Image
+                src="/tradeverse-city-logo.png"
+                alt="Tradeverse City Logo"
+                fill
+                className="object-contain rounded-full"
+                priority
+              />
             </div>
             <div className="flex flex-col leading-none">
               <span className="font-bold text-foreground text-sm tracking-wide">TRADEVERSE</span>
@@ -69,7 +63,7 @@ export default function Navbar() {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
             <Link
-              href="#"
+              href="/"
               className="px-4 py-2 text-sm text-foreground hover:text-gold transition-colors duration-200 font-medium"
             >
               Home
@@ -87,13 +81,13 @@ export default function Navbar() {
               {learningOpen && (
                 <div className="absolute top-full left-0 mt-1 w-64 bg-card border border-border rounded-xl shadow-2xl shadow-black/60 py-2 z-50">
                   {learningLinks.map((item) => (
-                    <a
+                    <Link
                       key={item.label}
                       href={item.href}
                       className="block px-4 py-2.5 text-sm text-muted-foreground hover:text-gold hover:bg-muted transition-colors duration-150"
                     >
                       {item.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               )}
@@ -111,29 +105,29 @@ export default function Navbar() {
               {coursesOpen && (
                 <div className="absolute top-full left-0 mt-1 w-64 bg-card border border-border rounded-xl shadow-2xl shadow-black/60 py-2 z-50">
                   {courseLinks.map((item) => (
-                    <a
+                    <Link
                       key={item.label}
                       href={item.href}
                       className="block px-4 py-2.5 text-sm text-muted-foreground hover:text-gold hover:bg-muted transition-colors duration-150"
                     >
                       {item.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               )}
             </div>
 
             <Link
-              href="#about"
+              href="/#about"
               className="px-4 py-2 text-sm text-foreground hover:text-gold transition-colors duration-200 font-medium"
             >
-              About
+              About Us
             </Link>
             <Link
-              href="#contact"
+              href="/#contact"
               className="px-4 py-2 text-sm text-foreground hover:text-gold transition-colors duration-200 font-medium"
             >
-              Contact
+              Contact Us
             </Link>
           </nav>
 
@@ -180,7 +174,7 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="md:hidden bg-card border-b border-border">
           <nav className="px-4 py-4 flex flex-col gap-1" aria-label="Mobile navigation">
-            <Link href="#" className="px-3 py-2.5 text-sm font-medium text-foreground hover:text-gold transition-colors" onClick={() => setMobileOpen(false)}>
+            <Link href="/" className="px-3 py-2.5 text-sm font-medium text-foreground hover:text-gold transition-colors" onClick={() => setMobileOpen(false)}>
               Home
             </Link>
             <button
@@ -193,9 +187,9 @@ export default function Navbar() {
             {learningOpen && (
               <div className="pl-4 flex flex-col gap-0.5">
                 {learningLinks.map((item) => (
-                  <a key={item.label} href={item.href} className="px-3 py-2 text-sm text-muted-foreground hover:text-gold transition-colors" onClick={() => setMobileOpen(false)}>
+                  <Link key={item.label} href={item.href} className="px-3 py-2 text-sm text-muted-foreground hover:text-gold transition-colors" onClick={() => setMobileOpen(false)}>
                     {item.label}
-                  </a>
+                  </Link>
                 ))}
               </div>
             )}
@@ -209,17 +203,17 @@ export default function Navbar() {
             {coursesOpen && (
               <div className="pl-4 flex flex-col gap-0.5">
                 {courseLinks.map((item) => (
-                  <a key={item.label} href={item.href} className="px-3 py-2 text-sm text-muted-foreground hover:text-gold transition-colors" onClick={() => setMobileOpen(false)}>
+                  <Link key={item.label} href={item.href} className="px-3 py-2 text-sm text-muted-foreground hover:text-gold transition-colors" onClick={() => setMobileOpen(false)}>
                     {item.label}
-                  </a>
+                  </Link>
                 ))}
               </div>
             )}
-            <Link href="#about" className="px-3 py-2.5 text-sm font-medium text-foreground hover:text-gold transition-colors" onClick={() => setMobileOpen(false)}>
-              About
+            <Link href="/#about" className="px-3 py-2.5 text-sm font-medium text-foreground hover:text-gold transition-colors" onClick={() => setMobileOpen(false)}>
+              About Us
             </Link>
-            <Link href="#contact" className="px-3 py-2.5 text-sm font-medium text-foreground hover:text-gold transition-colors" onClick={() => setMobileOpen(false)}>
-              Contact
+            <Link href="/#contact" className="px-3 py-2.5 text-sm font-medium text-foreground hover:text-gold transition-colors" onClick={() => setMobileOpen(false)}>
+              Contact Us
             </Link>
             <a
               href={WA_ENROLL}
