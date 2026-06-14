@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
-import Navbar from "@/components/navbar"
+import NavbarWrapper from "@/components/navbar-wrapper"
 import { ArrowLeft, ShoppingBag, CheckCircle, Clock, XCircle } from "lucide-react"
 import Link from "next/link"
 
@@ -30,7 +30,7 @@ export default async function OrdersPage() {
 
   return (
     <>
-      <Navbar />
+      <NavbarWrapper />
       <main className="min-h-screen bg-background pt-20">
         <div className="max-w-4xl mx-auto px-4 py-10">
           <div className="flex items-center gap-3 mb-8">

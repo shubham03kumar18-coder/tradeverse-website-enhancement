@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
-import Navbar from "@/components/navbar"
+import NavbarWrapper from "@/components/navbar-wrapper"
 import Link from "next/link"
 import Image from "next/image"
 import { BookOpen, ShoppingBag, User, ArrowRight, LogOut } from "lucide-react"
@@ -28,7 +28,7 @@ export default async function DashboardPage() {
 
   return (
     <>
-      <Navbar />
+      <NavbarWrapper />
       <main className="min-h-screen bg-background pt-20">
         <div className="max-w-7xl mx-auto px-4 py-10">
           {/* Header */}

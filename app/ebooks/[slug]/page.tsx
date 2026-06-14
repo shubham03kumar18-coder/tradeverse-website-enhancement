@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server"
 import Link from "next/link"
 import Image from "next/image"
-import Navbar from "@/components/navbar"
+import NavbarWrapper from "@/components/navbar-wrapper"
 import Footer from "@/components/footer"
 import { BookOpen, ArrowRight, Tag } from "lucide-react"
 import { notFound } from "next/navigation"
@@ -68,7 +68,7 @@ export default async function EbookDetailPage({ params }: Props) {
 
   return (
     <>
-      <Navbar />
+      <NavbarWrapper />
       <main className="min-h-screen bg-background pt-20">
         {/* Breadcrumb */}
         <div className="border-b border-border">

@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
-import Navbar from "@/components/navbar"
+import NavbarWrapper from "@/components/navbar-wrapper"
 import { BookOpen, ArrowLeft } from "lucide-react"
 
 export const metadata = { title: "My Library | Tradeverse City" }
@@ -21,7 +21,7 @@ export default async function LibraryPage() {
 
   return (
     <>
-      <Navbar />
+      <NavbarWrapper />
       <main className="min-h-screen bg-background pt-20">
         <div className="max-w-7xl mx-auto px-4 py-10">
           <div className="flex items-center gap-3 mb-8">

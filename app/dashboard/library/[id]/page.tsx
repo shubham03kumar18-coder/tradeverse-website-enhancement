@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server"
 import { redirect, notFound } from "next/navigation"
-import Navbar from "@/components/navbar"
+import NavbarWrapper from "@/components/navbar-wrapper"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import PdfReader from "@/components/pdf-reader"
@@ -40,14 +40,14 @@ export default async function ReadEbookPage({ params }: Props) {
   let pdfUrl: string | null = null
   if (ebook.pdf_path) {
     const { data: signed } = await supabase.storage
-      .from("ebooks-pdfs")
+      .from("ebook-pdfs")
       .createSignedUrl(ebook.pdf_path, 1800)
     pdfUrl = signed?.signedUrl ?? null
   }
 
   return (
     <>
-      <Navbar />
+      <NavbarWrapper />
       <main className="min-h-screen bg-background pt-16">
         {/* Top bar */}
         <div className="border-b border-border bg-card/50 backdrop-blur-md px-4 py-3">
