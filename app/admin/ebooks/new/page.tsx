@@ -3,13 +3,15 @@ import Link from "next/link"
 import { createEbook } from "@/app/admin/actions"
 import EbookForm from "@/components/admin/ebook-form"
 import { createClient } from "@/lib/supabase/server"
+import { createAdminClient } from "@/lib/supabase/admin"
 import { redirect } from "next/navigation"
 
 async function requireAdmin() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect("/auth/login?next=/admin/ebooks/new")
-  const { data: profile } = await supabase.from("profiles").select("is_admin").eq("id", user.id).single()
+  if (!user) redirect("/admin/login")
+  const adminClient = createAdminClient()
+  const { data: profile } = await adminClient.from("profiles").select("is_admin").eq("id", user.id).single()
   if (!profile?.is_admin) redirect("/dashboard")
 }
 
