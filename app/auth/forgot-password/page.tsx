@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import ForgotPasswordForm from '@/components/auth/forgot-password-form'
 
 export const metadata = {
@@ -11,7 +12,9 @@ export default function ForgotPasswordPage() {
         <h1 className="text-2xl font-bold text-foreground mb-2">Reset your password</h1>
         <p className="text-muted-foreground text-sm">Enter your email and we&apos;ll send you a reset link</p>
       </div>
-      <ForgotPasswordForm />
+      <Suspense fallback={<div className="text-center text-muted-foreground text-sm">Loading...</div>}>
+        <ForgotPasswordForm />
+      </Suspense>
     </>
   )
 }
