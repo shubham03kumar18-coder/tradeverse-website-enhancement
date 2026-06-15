@@ -1,12 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Mail, AlertCircle, CheckCircle, Loader } from 'lucide-react'
 
 export default function ForgotPasswordForm() {
-  const searchParams = useSearchParams()
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
