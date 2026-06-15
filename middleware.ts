@@ -4,7 +4,7 @@ import { updateSession } from "@/lib/supabase/proxy"
 const PROTECTED = ["/dashboard", "/admin"]
 const AUTH_ROUTES = ["/auth/login", "/auth/signup"]
 // Admin login is public — don't block it as part of /admin
-const PUBLIC_ADMIN = ["/admin/login"]
+const PUBLIC_ADMIN = ["/admin/login", "/admin/setup"]
 
 export async function middleware(request: NextRequest) {
   const { supabaseResponse, user } = await updateSession(request)
