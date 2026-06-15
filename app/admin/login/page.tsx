@@ -22,6 +22,8 @@ export default function AdminLoginPage() {
     setError(null)
 
     const supabase = createClient()
+    
+    // Sign in
     const { data, error: signInError } = await supabase.auth.signInWithPassword({
       email: ADMIN_EMAIL,
       password,
@@ -33,8 +35,18 @@ export default function AdminLoginPage() {
       return
     }
 
-    // Verify admin flag via server route (bypasses RLS reliably)
-    const res = await fetch("/api/admin/check")
+    // Refresh session to ensure JWT is fresh
+    await supabase.auth.refreshSession()
+
+    // Wait a moment for session to update
+    await new Promise(resolve => setTimeout(resolve, 500))
+
+    // Now check admin status via API
+    const res = await fetch("/api/admin/check", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+
     const { isAdmin } = await res.json()
 
     if (!isAdmin) {
@@ -44,6 +56,7 @@ export default function AdminLoginPage() {
       return
     }
 
+    // Success — redirect to admin dashboard
     router.push("/admin")
     router.refresh()
   }
@@ -158,7 +171,7 @@ export default function AdminLoginPage() {
           </form>
         </div>
 
-        {/* Admin quick links — shown after context */}
+        {/* Admin quick links */}
         <div className="mt-6 bg-card border border-border rounded-xl p-4">
           <p className="text-xs text-muted-foreground mb-3 font-medium uppercase tracking-wider">After signing in you can:</p>
           <ul className="flex flex-col gap-2 text-sm text-foreground">
