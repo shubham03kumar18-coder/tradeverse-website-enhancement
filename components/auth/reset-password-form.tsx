@@ -1,13 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Lock, Eye, EyeOff, AlertCircle, CheckCircle, Loader } from 'lucide-react'
 
 export default function ResetPasswordForm() {
   const router = useRouter()
-  const searchParams = useSearchParams()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -20,7 +19,6 @@ export default function ResetPasswordForm() {
     e.preventDefault()
     setError(null)
 
-    // Validate passwords
     if (password !== confirmPassword) {
       setError('Passwords do not match')
       return
@@ -48,7 +46,6 @@ export default function ResetPasswordForm() {
     setSuccess(true)
     setLoading(false)
 
-    // Redirect after 2 seconds
     setTimeout(() => {
       router.push('/auth/login')
     }, 2000)
@@ -70,7 +67,6 @@ export default function ResetPasswordForm() {
         </div>
       )}
 
-      {/* New Password */}
       <div className="flex flex-col gap-2">
         <label htmlFor="password" className="text-sm font-medium text-foreground">
           New Password
@@ -96,7 +92,6 @@ export default function ResetPasswordForm() {
         </div>
       </div>
 
-      {/* Confirm Password */}
       <div className="flex flex-col gap-2">
         <label htmlFor="confirm-password" className="text-sm font-medium text-foreground">
           Confirm Password
