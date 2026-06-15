@@ -21,8 +21,15 @@ export default function AdminLoginPage() {
     setLoading(true)
     setError(null)
 
-    const supabase = createClient()
-    
+    let supabase
+    try {
+      supabase = createClient()
+    } catch {
+      setError("Supabase is not configured yet. Please add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in Settings > Vars.")
+      setLoading(false)
+      return
+    }
+
     // Sign in
     const { data, error: signInError } = await supabase.auth.signInWithPassword({
       email: ADMIN_EMAIL,
@@ -36,7 +43,7 @@ export default function AdminLoginPage() {
     }
 
     // Refresh session to ensure JWT is fresh
-    await supabase.auth.refreshSession()
+    await supabase!.auth.refreshSession()
 
     // Wait a moment for session to update
     await new Promise(resolve => setTimeout(resolve, 500))
@@ -50,7 +57,7 @@ export default function AdminLoginPage() {
     const { isAdmin } = await res.json()
 
     if (!isAdmin) {
-      await supabase.auth.signOut()
+      await supabase!.auth.signOut()
       setError("This account does not have admin access.")
       setLoading(false)
       return

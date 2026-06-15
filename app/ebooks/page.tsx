@@ -1,8 +1,8 @@
 import Link from "next/link"
 import Image from "next/image"
-import { createClient } from "@/lib/supabase/server"
 import type { Ebook } from "@/lib/types"
-import { BookOpen, Tag, Star, ArrowRight } from "lucide-react"
+import { LOCAL_EBOOKS } from "@/lib/ebooks-data"
+import { BookOpen, Tag, ArrowRight } from "lucide-react"
 import NavbarWrapper from "@/components/navbar-wrapper"
 
 export const metadata = {
@@ -10,15 +10,31 @@ export const metadata = {
   description: "Premium trading ebooks — master technical analysis, risk management, trading psychology, and more.",
 }
 
-export default async function EbooksPage() {
-  const supabase = await createClient()
-  const { data: ebooks } = await supabase
-    .from("ebooks")
-    .select("*")
-    .eq("is_published", true)
-    .order("created_at", { ascending: false })
+async function getEbooks(): Promise<Ebook[]> {
+  // If Supabase env vars are not set, fall back to local seed data
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return LOCAL_EBOOKS.filter((e) => e.is_published)
+  }
+  try {
+    const { createClient } = await import("@/lib/supabase/server")
+    const supabase = await createClient()
+    const { data } = await supabase
+      .from("ebooks")
+      .select("*")
+      .eq("is_published", true)
+      .order("created_at", { ascending: false })
+    // Merge local ebooks so the Candlestick Hindi book is always available
+    const remote = (data ?? []) as Ebook[]
+    const remoteIds = new Set(remote.map((e) => e.id))
+    const localFallbacks = LOCAL_EBOOKS.filter((e) => e.is_published && !remoteIds.has(e.id))
+    return [...remote, ...localFallbacks]
+  } catch {
+    return LOCAL_EBOOKS.filter((e) => e.is_published)
+  }
+}
 
-  const list = (ebooks ?? []) as Ebook[]
+export default async function EbooksPage() {
+  const list = await getEbooks()
 
   return (
     <>
@@ -57,7 +73,7 @@ export default async function EbooksPage() {
   )
 }
 
-function EbookCard({ book }: { book: Ebook }) {
+function EbookCard({ book }: { book: Ebook & { pdf_public_path?: string } }) {
   return (
     <Link
       href={`/ebooks/${book.slug}`}
