@@ -30,13 +30,12 @@ export default function SubPageCTA({ topic }: SubPageCTAProps) {
       <div className="max-w-3xl mx-auto">
         {/* Notice box */}
         <div className="rounded-2xl border border-gold/20 bg-card/60 px-6 py-8 text-center mb-8">
-          <p className="text-sm text-muted-foreground leading-relaxed text-pretty mb-1">
-            <span className="text-gold font-semibold">No pricing displayed on this website.</span>
-          </p>
-          <p className="text-sm text-muted-foreground leading-relaxed text-pretty">
-            For complete course details, fees, schedules, enrollment information, and mentorship
-            guidance, contact{" "}
-            <span className="text-foreground font-semibold">Tradeverse City</span> on WhatsApp.
+          <p className="text-lg font-bold text-foreground mb-2">Ready to Take the Next Step?</p>
+          <p className="text-sm text-muted-foreground leading-relaxed text-pretty max-w-md mx-auto">
+            Reach out to{" "}
+            <span className="text-foreground font-semibold">Tradeverse City</span> directly to get
+            personalised guidance on course structure, upcoming batches, mentorship access, and
+            everything else you need to get started with confidence.
           </p>
         </div>
 

@@ -1,8 +1,6 @@
-"use client"
-
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
-import Navbar from "@/components/navbar"
+import NavbarWrapper from "@/components/navbar-wrapper"
 import FloatingButtons from "@/components/floating-buttons"
 import SubPageCTA from "@/components/sub-page-cta"
 
@@ -21,7 +19,7 @@ export default function SubPageLayout({
 }: SubPageLayoutProps) {
   return (
     <main className="bg-background text-foreground min-h-screen">
-      <Navbar />
+      <NavbarWrapper />
       {/* Push content below fixed navbar (64px) */}
       <div className="h-16" aria-hidden="true" />
 

@@ -115,8 +115,6 @@ export default function Hero() {
     setMounted(true)
   }, [])
 
-  if (!mounted) return null
-
   return (
     <section className="relative min-h-screen flex flex-col overflow-hidden bg-background" aria-label="Hero section">
       {/* Background grid */}
@@ -136,15 +134,17 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      {/* Orbital rings */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true">
-        <OrbitalRing size={320} speed="animate-orbit-cw" opacity={0.4} dotColor="oklch(0.78 0.14 85)" />
-        <OrbitalRing size={480} speed="animate-orbit-ccw" opacity={0.25} dotColor="oklch(0.70 0.12 85)" />
-        <OrbitalRing size={640} speed="animate-orbit-cw" opacity={0.15} dotColor="oklch(0.60 0.10 85)" />
-      </div>
+      {/* Orbital rings - client only to avoid hydration mismatch */}
+      {mounted && (
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true">
+          <OrbitalRing size={320} speed="animate-orbit-cw" opacity={0.4} dotColor="oklch(0.78 0.14 85)" />
+          <OrbitalRing size={480} speed="animate-orbit-ccw" opacity={0.25} dotColor="oklch(0.70 0.12 85)" />
+          <OrbitalRing size={640} speed="animate-orbit-cw" opacity={0.15} dotColor="oklch(0.60 0.10 85)" />
+        </div>
+      )}
 
-      {/* Star particles */}
-      {[...Array(20)].map((_, i) => (
+      {/* Star particles - client only */}
+      {mounted && [...Array(20)].map((_, i) => (
         <div
           key={i}
           className="absolute w-1 h-1 rounded-full bg-gold/40 animate-twinkle"

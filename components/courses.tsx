@@ -1,10 +1,22 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowRight } from "lucide-react"
+import Link from "next/link"
+import { ArrowRight, ExternalLink } from "lucide-react"
 import CourseModal, { type CourseDetail } from "@/components/course-modal"
 
 const PHONE = "919318336747"
+
+const COURSE_SLUGS: Record<string, string> = {
+  "Stock Market Fundamentals": "stock-market-fundamentals",
+  "Candlestick Analysis": "candlestick-analysis",
+  "Price Action Trading": "price-action-trading",
+  "Swing Trading": "swing-trading",
+  "Intraday Trading": "intraday-trading",
+  "Options Trading Fundamentals": "options-trading-fundamentals",
+  "Risk Management": "risk-management",
+  "Trading Psychology": "trading-psychology",
+}
 
 const courses: CourseDetail[] = [
   {
@@ -167,25 +179,45 @@ export default function Courses() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {courses.map((course) => (
-            <button
-              key={course.title}
-              onClick={() => setSelectedCourse(course)}
-              className="group flex flex-col gap-3 p-5 rounded-2xl border border-border bg-card/60 card-glow transition-all duration-300 hover:-translate-y-1 text-left cursor-pointer"
-              aria-label={`${course.title} - ${course.level} level. Click for details.`}
-            >
-              <div className="flex items-start justify-between gap-2">
-                <h3 className="text-sm font-bold text-foreground leading-snug text-balance">{course.title}</h3>
+          {courses.map((course) => {
+            const slug = COURSE_SLUGS[course.title]
+            return (
+              <div
+                key={course.title}
+                className="group flex flex-col gap-3 p-5 rounded-2xl border border-border bg-card/60 card-glow transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <h3 className="text-sm font-bold text-foreground leading-snug text-balance">{course.title}</h3>
+                </div>
+                <div className="text-xs text-muted-foreground leading-relaxed line-clamp-2">{course.description}</div>
+                <div className="flex items-center justify-between mt-auto pt-2">
+                  <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border ${course.levelColor}`}>
+                    {course.level}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 pt-1 border-t border-border">
+                  <button
+                    onClick={() => setSelectedCourse(course)}
+                    className="flex-1 flex items-center justify-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-gold transition-colors duration-150 py-1.5"
+                    aria-label={`Quick view ${course.title}`}
+                  >
+                    <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                    Quick View
+                  </button>
+                  {slug && (
+                    <Link
+                      href={`/courses/${slug}`}
+                      className="flex-1 flex items-center justify-center gap-1.5 text-xs font-semibold text-gold hover:opacity-80 transition-opacity duration-150 py-1.5"
+                      aria-label={`Full details for ${course.title}`}
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+                      Full Details
+                    </Link>
+                  )}
+                </div>
               </div>
-              <div className="text-xs text-muted-foreground leading-relaxed line-clamp-2">{course.description}</div>
-              <div className="flex items-center justify-between mt-auto pt-2">
-                <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border ${course.levelColor}`}>
-                  {course.level}
-                </span>
-                <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-gold group-hover:translate-x-1 transition-all duration-200" />
-              </div>
-            </button>
-          ))}
+            )
+          })}
         </div>
 
         <div className="text-center mt-10">
