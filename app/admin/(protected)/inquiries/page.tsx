@@ -3,7 +3,7 @@ import { createAdminClient } from "@/lib/supabase/admin"
 import { redirect } from "next/navigation"
 import Link from "next/link"
 import { ArrowLeft, MessageSquare, Mail, Phone, Clock } from "lucide-react"
-import { markInquiryRead } from "@/app/admin/actions"
+import { markInquiryRead } from "@/app/admin/(protected)/actions"
 
 async function requireAdmin() {
   const supabase = await createClient()

@@ -1,6 +1,6 @@
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
-import { updateEbook, deleteEbook } from "@/app/admin/actions"
+import { updateEbook, deleteEbook } from "@/app/admin/(protected)/actions"
 import EbookForm from "@/components/admin/ebook-form"
 import { createClient } from "@/lib/supabase/server"
 import { createAdminClient } from "@/lib/supabase/admin"

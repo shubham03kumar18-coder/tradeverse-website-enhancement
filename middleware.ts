@@ -10,14 +10,8 @@ export async function middleware(request: NextRequest) {
   const { supabaseResponse, user } = await updateSession(request)
   const pathname = request.nextUrl.pathname
 
-  // Allow /admin/login without auth
+  // Allow /admin/login without auth — never redirect here, let the page handle it
   if (PUBLIC_ADMIN.some((p) => pathname.startsWith(p))) {
-    // If already authenticated admin, bounce to /admin
-    if (user) {
-      const url = request.nextUrl.clone()
-      url.pathname = "/admin"
-      return NextResponse.redirect(url)
-    }
     return supabaseResponse
   }
 
