@@ -1,4 +1,4 @@
-import Navbar from "@/components/navbar"
+import NavbarWrapper from "@/components/navbar-wrapper"
 import BatchCountdown from "@/components/batch-countdown"
 import MarketTicker from "@/components/market-ticker"
 import Hero from "@/components/hero"
@@ -17,7 +17,7 @@ export default function Page() {
   return (
     <main className="bg-background text-foreground min-h-screen">
       {/* Fixed header stack: Navbar → Batch countdown → Market ticker */}
-      <Navbar />
+      <NavbarWrapper />
 
       {/* Sticky bars below navbar */}
       <div className="fixed top-16 left-0 right-0 z-40 flex flex-col">

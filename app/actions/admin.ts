@@ -1,100 +1,112 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
-import { z } from 'zod'
+import { redirect } from 'next/navigation'
 
 async function requireAdmin() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error('Unauthorized')
-  
-  const { data: profile } = await supabase
+
+  // Use service-role client to bypass RLS for the admin check
+  const adminClient = createAdminClient()
+  const { data: profile } = await adminClient
     .from('profiles')
     .select('is_admin')
-    .eq('user_id', user.id)
+    .eq('id', user.id)
     .single()
-  
+
   if (!profile?.is_admin) throw new Error('Forbidden: Admin access required')
-  return { supabase, user }
+  return { supabase, adminClient, user }
 }
 
-const ebookSchema = z.object({
-  title: z.string().min(1, 'Title is required'),
-  slug: z.string().min(1, 'Slug is required'),
-  short_description: z.string().max(200).optional(),
-  description: z.string().min(1, 'Description is required'),
-  category: z.string().min(1, 'Category is required'),
-  price: z.coerce.number().positive('Price must be positive'),
-  is_featured: z.boolean().default(false),
-  is_active: z.boolean().default(true),
-})
+function slugify(text: string) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim()
+}
+
+async function uploadFile(
+  adminClient: ReturnType<typeof createAdminClient>,
+  bucket: string,
+  folder: string,
+  file: File,
+): Promise<string> {
+  const ext = file.name.split('.').pop() ?? 'bin'
+  const filename = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+  const arrayBuffer = await file.arrayBuffer()
+  const buffer = Buffer.from(arrayBuffer)
+
+  const { error } = await adminClient.storage.from(bucket).upload(filename, buffer, {
+    contentType: file.type,
+    upsert: false,
+  })
+  if (error) throw new Error(`Storage upload failed: ${error.message}`)
+  return filename
+}
+
+function getCoverPublicUrl(adminClient: ReturnType<typeof createAdminClient>, path: string): string {
+  const { data } = adminClient.storage.from('covers').getPublicUrl(path)
+  return data.publicUrl
+}
 
 export async function createEbook(formData: FormData) {
   try {
-    const { supabase, user } = await requireAdmin()
+    const { adminClient } = await requireAdmin()
 
-    const raw = {
-      title: formData.get('title') as string,
-      slug: formData.get('slug') as string,
-      short_description: formData.get('short_description') as string || undefined,
-      description: formData.get('description') as string,
-      category: formData.get('category') as string,
-      price: formData.get('price'),
-      is_featured: formData.get('is_featured') === 'true',
-      is_active: formData.get('is_active') !== 'false',
-    }
+    const title = formData.get('title') as string
+    const description = formData.get('description') as string
+    const priceStr = formData.get('price_inr') as string
+    const isFree = formData.get('is_free') === 'true'
+    const isPublished = formData.get('is_published') === 'true'
+    const author = formData.get('author') as string
+    const tagsStr = formData.get('tags') as string
+    const pageCountStr = formData.get('page_count') as string
+    const coverFile = formData.get('cover_file') as File | null
+    const pdfFile = formData.get('pdf_file') as File | null
 
-    const parsed = ebookSchema.safeParse(raw)
-    if (!parsed.success) return { error: parsed.error.errors[0].message }
+    if (!title) return { error: 'Title is required' }
+    if (!pdfFile || pdfFile.size === 0) return { error: 'PDF file is required' }
 
-    // Get the profile id for created_by
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('user_id', user.id)
-      .single()
+    const slug = slugify(title)
+    const tags = tagsStr ? tagsStr.split(',').map((t) => t.trim()).filter(Boolean) : []
 
-    let cover_image_path = null
-    let pdf_path = ''
+    // Upload PDF to private 'ebooks' bucket
+    const pdfPath = await uploadFile(adminClient, 'ebooks', 'pdfs', pdfFile)
 
-    // Upload cover image
-    const coverFile = formData.get('cover_image') as File
+    // Upload cover to public 'covers' bucket (optional)
+    let coverUrl: string | null = null
     if (coverFile && coverFile.size > 0) {
-      const ebookId = crypto.randomUUID()
-      const ext = coverFile.name.split('.').pop()
-      const path = `ebooks/${ebookId}/cover.${ext}`
-      const { error: uploadError } = await supabase.storage
-        .from('ebook-covers')
-        .upload(path, coverFile, { contentType: coverFile.type })
-      if (!uploadError) cover_image_path = path
+      const coverPath = await uploadFile(adminClient, 'covers', 'ebooks', coverFile)
+      coverUrl = getCoverPublicUrl(adminClient, coverPath)
     }
 
-    // Upload PDF
-    const pdfFile = formData.get('pdf_file') as File
-    if (pdfFile && pdfFile.size > 0) {
-      const ebookId = crypto.randomUUID()
-      const path = `ebooks/${ebookId}/content.pdf`
-      const { error: uploadError } = await supabase.storage
-        .from('ebook-pdfs')
-        .upload(path, pdfFile, { contentType: 'application/pdf' })
-      if (!uploadError) pdf_path = path
-    }
-
-    const { data, error } = await supabase
+    const { data, error } = await adminClient
       .from('ebooks')
       .insert({
-        ...parsed.data,
-        cover_image_path,
-        pdf_path,
-        created_by: profile?.id,
+        title,
+        slug,
+        description: description || null,
+        price_inr: isFree ? 0 : parseInt(priceStr || '0', 10),
+        is_free: isFree,
+        is_published: isPublished,
+        author: author || 'Tradeverse City',
+        tags,
+        page_count: pageCountStr ? parseInt(pageCountStr, 10) : null,
+        cover_url: coverUrl,
+        pdf_path: pdfPath,
       })
       .select()
       .single()
 
     if (error) return { error: error.message }
+    revalidatePath('/ebooks')
     revalidatePath('/admin/ebooks')
-    revalidatePath('/catalog')
     return { success: true, ebook: data }
   } catch (err: any) {
     return { error: err.message }
@@ -103,47 +115,52 @@ export async function createEbook(formData: FormData) {
 
 export async function updateEbook(id: string, formData: FormData) {
   try {
-    const { supabase } = await requireAdmin()
+    const { adminClient } = await requireAdmin()
 
-    const raw = {
-      title: formData.get('title') as string,
-      slug: formData.get('slug') as string,
-      short_description: formData.get('short_description') as string || undefined,
-      description: formData.get('description') as string,
-      category: formData.get('category') as string,
-      price: formData.get('price'),
-      is_featured: formData.get('is_featured') === 'true',
-      is_active: formData.get('is_active') !== 'false',
-    }
+    const title = formData.get('title') as string
+    const description = formData.get('description') as string
+    const priceStr = formData.get('price_inr') as string
+    const isFree = formData.get('is_free') === 'true'
+    const isPublished = formData.get('is_published') === 'true'
+    const author = formData.get('author') as string
+    const tagsStr = formData.get('tags') as string
+    const pageCountStr = formData.get('page_count') as string
+    const coverFile = formData.get('cover_file') as File | null
+    const pdfFile = formData.get('pdf_file') as File | null
 
-    const parsed = ebookSchema.safeParse(raw)
-    if (!parsed.success) return { error: parsed.error.errors[0].message }
+    const tags = tagsStr ? tagsStr.split(',').map((t) => t.trim()).filter(Boolean) : []
 
-    const updates: Record<string, any> = { ...parsed.data, updated_at: new Date().toISOString() }
+    // Fetch existing to preserve paths
+    const { data: existing } = await adminClient.from('ebooks').select('cover_url, pdf_path').eq('id', id).single()
 
-    // Upload new cover if provided
-    const coverFile = formData.get('cover_image') as File
-    if (coverFile && coverFile.size > 0) {
-      const ext = coverFile.name.split('.').pop()
-      const path = `ebooks/${id}/cover.${ext}`
-      await supabase.storage.from('ebook-covers').upload(path, coverFile, { upsert: true, contentType: coverFile.type })
-      updates.cover_image_path = path
-    }
+    let pdfPath = existing?.pdf_path ?? null
+    let coverUrl = existing?.cover_url ?? null
 
-    // Upload new PDF if provided
-    const pdfFile = formData.get('pdf_file') as File
     if (pdfFile && pdfFile.size > 0) {
-      const path = `ebooks/${id}/content.pdf`
-      await supabase.storage.from('ebook-pdfs').upload(path, pdfFile, { upsert: true, contentType: 'application/pdf' })
-      updates.pdf_path = path
+      pdfPath = await uploadFile(adminClient, 'ebooks', 'pdfs', pdfFile)
+    }
+    if (coverFile && coverFile.size > 0) {
+      const coverPath = await uploadFile(adminClient, 'covers', 'ebooks', coverFile)
+      coverUrl = getCoverPublicUrl(adminClient, coverPath)
     }
 
-    const { error } = await supabase.from('ebooks').update(updates).eq('id', id)
-    if (error) return { error: error.message }
+    const { error } = await adminClient.from('ebooks').update({
+      title,
+      description: description || null,
+      price_inr: isFree ? 0 : parseInt(priceStr || '0', 10),
+      is_free: isFree,
+      is_published: isPublished,
+      author: author || 'Tradeverse City',
+      tags,
+      page_count: pageCountStr ? parseInt(pageCountStr, 10) : null,
+      cover_url: coverUrl,
+      pdf_path: pdfPath,
+      updated_at: new Date().toISOString(),
+    }).eq('id', id)
 
+    if (error) return { error: error.message }
+    revalidatePath('/ebooks')
     revalidatePath('/admin/ebooks')
-    revalidatePath(`/admin/ebooks/${id}/edit`)
-    revalidatePath('/catalog')
     return { success: true }
   } catch (err: any) {
     return { error: err.message }
@@ -152,22 +169,10 @@ export async function updateEbook(id: string, formData: FormData) {
 
 export async function deleteEbook(id: string) {
   try {
-    const { supabase } = await requireAdmin()
-    const { error } = await supabase.from('ebooks').delete().eq('id', id)
+    const { adminClient } = await requireAdmin()
+    const { error } = await adminClient.from('ebooks').delete().eq('id', id)
     if (error) return { error: error.message }
-    revalidatePath('/admin/ebooks')
-    revalidatePath('/catalog')
-    return { success: true }
-  } catch (err: any) {
-    return { error: err.message }
-  }
-}
-
-export async function toggleEbookActive(id: string, is_active: boolean) {
-  try {
-    const { supabase } = await requireAdmin()
-    const { error } = await supabase.from('ebooks').update({ is_active, updated_at: new Date().toISOString() }).eq('id', id)
-    if (error) return { error: error.message }
+    revalidatePath('/ebooks')
     revalidatePath('/admin/ebooks')
     return { success: true }
   } catch (err: any) {
@@ -175,10 +180,26 @@ export async function toggleEbookActive(id: string, is_active: boolean) {
   }
 }
 
-export async function updateInquiryStatus(id: string, status: string) {
+export async function toggleEbookActive(id: string, is_published: boolean) {
   try {
-    const { supabase } = await requireAdmin()
-    const { error } = await supabase.from('contact_inquiries').update({ status }).eq('id', id)
+    const { adminClient } = await requireAdmin()
+    const { error } = await adminClient
+      .from('ebooks')
+      .update({ is_published, updated_at: new Date().toISOString() })
+      .eq('id', id)
+    if (error) return { error: error.message }
+    revalidatePath('/admin/ebooks')
+    revalidatePath('/ebooks')
+    return { success: true }
+  } catch (err: any) {
+    return { error: err.message }
+  }
+}
+
+export async function updateInquiryStatus(id: string, is_read: boolean) {
+  try {
+    const { adminClient } = await requireAdmin()
+    const { error } = await adminClient.from('contact_inquiries').update({ is_read }).eq('id', id)
     if (error) return { error: error.message }
     revalidatePath('/admin/inquiries')
     return { success: true }
@@ -189,8 +210,8 @@ export async function updateInquiryStatus(id: string, status: string) {
 
 export async function deleteInquiry(id: string) {
   try {
-    const { supabase } = await requireAdmin()
-    const { error } = await supabase.from('contact_inquiries').delete().eq('id', id)
+    const { adminClient } = await requireAdmin()
+    const { error } = await adminClient.from('contact_inquiries').delete().eq('id', id)
     if (error) return { error: error.message }
     revalidatePath('/admin/inquiries')
     return { success: true }

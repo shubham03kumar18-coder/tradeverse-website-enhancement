@@ -16,12 +16,12 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  if (!user) redirect('/auth/login?next=/admin')
+  if (!user) redirect('/admin/login')
 
   const { data: profile } = await supabase
     .from('profiles')
-    .select('is_admin, full_name, email')
-    .eq('user_id', user.id)
+    .select('is_admin, full_name')
+    .eq('id', user.id)
     .single()
 
   if (!profile?.is_admin) {
@@ -70,7 +70,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         {/* User */}
         <div className="p-4 border-t border-border">
           <div className="text-xs text-muted-foreground mb-3 truncate">
-            {profile.full_name || profile.email}
+            {profile.full_name || user.email}
           </div>
           <form action={logoutUser}>
             <button
