@@ -1,19 +1,9 @@
 "use server"
 
 import { createAdminClient } from "@/lib/supabase/admin"
-import { createClient } from "@/lib/supabase/server"
-import { redirect } from "next/navigation"
+import { requireAdmin } from "@/lib/admin-auth"
 import { revalidatePath } from "next/cache"
-
-async function requireAdmin() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect("/admin/login")
-  const admin = createAdminClient()
-  const { data: profile } = await admin.from("profiles").select("is_admin").eq("id", user.id).single()
-  if (!profile?.is_admin) throw new Error("Unauthorized")
-  return user
-}
+import { redirect } from "next/navigation"
 
 function slugify(text: string) {
   return text
@@ -24,7 +14,7 @@ function slugify(text: string) {
     .trim()
 }
 
-/** Upload a file to Supabase Storage and return its public/path URL */
+/** Upload a file to Supabase Storage and return its path */
 async function uploadFile(
   admin: ReturnType<typeof createAdminClient>,
   bucket: string,
@@ -117,7 +107,7 @@ export async function updateEbook(id: string, formData: FormData) {
 
   const tags = tagsStr ? tagsStr.split(",").map((t) => t.trim()).filter(Boolean) : []
 
-  // Fetch existing record to preserve existing paths if no new file uploaded
+  // Fetch existing record to preserve paths if no new file uploaded
   const { data: existing } = await admin.from("ebooks").select("cover_url, pdf_path").eq("id", id).single()
 
   let pdfPath = existing?.pdf_path ?? null
