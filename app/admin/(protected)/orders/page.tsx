@@ -1,23 +1,11 @@
-import { createClient } from "@/lib/supabase/server"
-import { createAdminClient } from "@/lib/supabase/admin"
-import { redirect } from "next/navigation"
+import { requireAdmin } from "@/lib/admin-auth"
 import Link from "next/link"
 import { ArrowLeft, ShoppingBag, TrendingUp, CheckCircle, Clock, XCircle } from "lucide-react"
-
-async function requireAdmin() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect("/admin/login")
-  const adminClient = createAdminClient()
-  const { data: profile } = await adminClient.from("profiles").select("is_admin").eq("id", user.id).single()
-  if (!profile?.is_admin) redirect("/dashboard")
-  return adminClient
-}
 
 export const metadata = { title: "Orders | Admin" }
 
 export default async function AdminOrdersPage() {
-  const supabase = await requireAdmin()
+  const { adminClient: supabase } = await requireAdmin()
 
   const { data: orders } = await supabase
     .from("purchases")

@@ -1,22 +1,13 @@
+import { requireAdmin } from "@/lib/admin-auth"
+import { createAdminClient } from "@/lib/supabase/admin"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { updateEbook, deleteEbook } from "@/app/admin/(protected)/actions"
 import EbookForm from "@/components/admin/ebook-form"
-import { createClient } from "@/lib/supabase/server"
-import { createAdminClient } from "@/lib/supabase/admin"
-import { redirect, notFound } from "next/navigation"
+import { notFound } from "next/navigation"
 
 interface Props {
   params: Promise<{ id: string }>
-}
-
-async function requireAdmin() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect("/admin/login")
-  const adminClient = createAdminClient()
-  const { data: profile } = await adminClient.from("profiles").select("is_admin").eq("id", user.id).single()
-  if (!profile?.is_admin) redirect("/dashboard")
 }
 
 export const metadata = { title: "Edit Ebook | Admin" }

@@ -1,30 +1,11 @@
-import { createClient } from "@/lib/supabase/server"
-import { createAdminClient } from "@/lib/supabase/admin"
-import { redirect } from "next/navigation"
+import { requireAdmin } from "@/lib/admin-auth"
 import Link from "next/link"
 import { BookOpen, ShoppingBag, MessageSquare, TrendingUp, Users, ArrowRight } from "lucide-react"
 
 export const metadata = { title: "Admin Dashboard | Tradeverse City" }
 
-async function requireAdmin() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect("/admin/login")
-
-  // Use service-role client to bypass RLS for the admin check
-  const adminClient = createAdminClient()
-  const { data: profile } = await adminClient
-    .from("profiles")
-    .select("is_admin")
-    .eq("id", user.id)
-    .single()
-
-  if (!profile?.is_admin) redirect("/dashboard")
-  return { supabase: adminClient, user }
-}
-
 export default async function AdminDashboard() {
-  const { supabase } = await requireAdmin()
+  const { adminClient: supabase } = await requireAdmin()
 
   const [
     { count: ebooksCount },

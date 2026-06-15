@@ -15,24 +15,30 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ isAdmin: false, error: 'Not authenticated' }, { status: 401 })
     }
 
-    // Use service-role client to bypass RLS when checking the profiles table
-    const adminClient = createAdminClient()
-    const { data: profile, error: profileError } = await adminClient
-      .from('profiles')
-      .select('is_admin')
-      .eq('id', user.id)
-      .single()
-
-    if (profileError || !profile) {
-      return NextResponse.json(
-        { isAdmin: false, error: 'Profile not found' },
-        { status: 404 }
-      )
+    // Primary check: app_metadata.is_admin (set by service-role, can't be self-assigned)
+    // This works even before the profiles table exists
+    if (user.app_metadata?.is_admin === true) {
+      return NextResponse.json({ isAdmin: true })
     }
 
-    const isAdmin = profile.is_admin === true
+    // Secondary check: profiles table via service-role client (bypasses RLS)
+    // Works once the SQL has been run and schema cache is populated
+    try {
+      const adminClient = createAdminClient()
+      const { data: profile, error: profileError } = await adminClient
+        .from('profiles')
+        .select('is_admin')
+        .eq('id', user.id)
+        .single()
 
-    return NextResponse.json({ isAdmin })
+      if (!profileError && profile?.is_admin === true) {
+        return NextResponse.json({ isAdmin: true })
+      }
+    } catch {
+      // profiles table not yet available — fall through
+    }
+
+    return NextResponse.json({ isAdmin: false, error: 'No admin access' })
   } catch (err) {
     return NextResponse.json({ isAdmin: false, error: String(err) }, { status: 500 })
   }

@@ -1,23 +1,11 @@
-import { createClient } from "@/lib/supabase/server"
-import { createAdminClient } from "@/lib/supabase/admin"
-import { redirect } from "next/navigation"
+import { requireAdmin } from "@/lib/admin-auth"
 import Link from "next/link"
 import { ArrowLeft, Plus, BookOpen, Eye, EyeOff, Pencil } from "lucide-react"
-
-async function requireAdmin() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect("/admin/login")
-  const adminClient = createAdminClient()
-  const { data: profile } = await adminClient.from("profiles").select("is_admin").eq("id", user.id).single()
-  if (!profile?.is_admin) redirect("/dashboard")
-  return adminClient
-}
 
 export const metadata = { title: "Manage Ebooks | Admin" }
 
 export default async function AdminEbooksPage() {
-  const supabase = await requireAdmin()
+  const { adminClient: supabase } = await requireAdmin()
 
   const { data: ebooks } = await supabase
     .from("ebooks")

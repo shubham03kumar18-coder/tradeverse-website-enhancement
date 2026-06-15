@@ -19,15 +19,28 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   if (!user) redirect('/admin/login')
 
-  // Use service-role client to bypass RLS when checking admin status
-  const adminClient = createAdminClient()
-  const { data: profile } = await adminClient
-    .from('profiles')
-    .select('is_admin, full_name')
-    .eq('id', user.id)
-    .single()
+  // Primary: check app_metadata.is_admin (works without DB table, set by service-role)
+  const isAdminViaMetadata = user.app_metadata?.is_admin === true
 
-  if (!profile?.is_admin) {
+  // Secondary: check profiles table via service-role client (bypasses RLS)
+  let profile: { is_admin: boolean; full_name: string | null } | null = null
+  if (!isAdminViaMetadata) {
+    try {
+      const adminClient = createAdminClient()
+      const { data } = await adminClient
+        .from('profiles')
+        .select('is_admin, full_name')
+        .eq('id', user.id)
+        .single()
+      profile = data
+    } catch {
+      // profiles table not yet available
+    }
+  }
+
+  const isAdmin = isAdminViaMetadata || profile?.is_admin === true
+
+  if (!isAdmin) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center space-y-4">
@@ -73,7 +86,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         {/* User */}
         <div className="p-4 border-t border-border">
           <div className="text-xs text-muted-foreground mb-3 truncate">
-            {profile.full_name || user.email}
+            {profile?.full_name || user.user_metadata?.full_name || user.email}
           </div>
           <form action={logoutUser}>
             <button

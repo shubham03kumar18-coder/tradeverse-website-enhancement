@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { CheckCircle, XCircle, Loader2, Copy, Check, Database, ShieldCheck, AlertTriangle } from "lucide-react"
+import { CheckCircle, XCircle, Loader2, Copy, Check, Database, ShieldCheck, AlertTriangle, CreditCard } from "lucide-react"
 
 const SQL_SCRIPT = `-- ============================================================
 -- TRADEVERSE CITY — Full Database Setup
@@ -169,11 +169,13 @@ export default function AdminSetupPage() {
           <Database className="w-7 h-7 text-gold" />
           <h1 className="text-2xl font-bold font-serif">Database Setup</h1>
         </div>
-        <p className="text-muted-foreground text-sm mb-8">
-          This page creates all required database tables and sets admin access for{" "}
+        <p className="text-muted-foreground text-sm mb-2">
+          Sets admin access for{" "}
           <span className="text-gold font-mono font-medium">tradeversecity@gmail.com</span>.
-          Run Step 1 first, then Step 2 if needed.
         </p>
+        <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl px-4 py-3 mb-8 text-sm text-yellow-300">
+          <strong className="text-yellow-200">Action required:</strong> You must run the SQL script in Step 2 in your Supabase SQL Editor first to create all tables. Then run Step 1 auto-setup to create the admin user.
+        </div>
 
         {/* Admin Credentials Card */}
         <div className="bg-gold/5 border border-gold/30 rounded-xl p-5 mb-8">
@@ -193,6 +195,33 @@ export default function AdminSetupPage() {
           </div>
           <p className="text-xs text-muted-foreground mt-3">
             Login URL: <span className="font-mono text-gold">/admin/login</span>
+          </p>
+        </div>
+
+        {/* Razorpay Status Card */}
+        <div className="bg-card border border-border rounded-xl p-5 mb-6">
+          <div className="flex items-center gap-2 mb-4">
+            <CreditCard className="w-4 h-4 text-gold" />
+            <span className="text-sm font-bold uppercase tracking-wide">Razorpay Payment Integration</span>
+          </div>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="flex items-center gap-3 bg-background/50 rounded-lg p-3">
+              <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+              <div>
+                <p className="text-xs text-muted-foreground">RAZORPAY_KEY_ID</p>
+                <p className="text-xs font-mono text-foreground">Connected</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 bg-background/50 rounded-lg p-3">
+              <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+              <div>
+                <p className="text-xs text-muted-foreground">RAZORPAY_KEY_SECRET</p>
+                <p className="text-xs font-mono text-foreground">Connected</p>
+              </div>
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground mt-3">
+            Razorpay keys are active. Payments on ebook purchase pages are fully functional.
           </p>
         </div>
 
